@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>العمليات - إدارة الحماية والسلامة من الحريق</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-shadow {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .map-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 10px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .info-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin: 4px;
+        }
+        .badge-yes {
+            background-color: #10b981;
+            color: white;
+        }
+        .badge-no {
+            background-color: #ef4444;
+            color: white;
+        }
+        .badge-info {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .badge-danger {
+            background-color: #dc2626;
+            color: white;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Header -->
+    <div class="bg-white rounded-lg mx-6 mt-6 p-4 card-shadow">
+        <div class="flex justify-between items-center">
+            <!-- Ministry of Interior Logo - Right -->
+            <div class="flex items-center">
+                <img src="interior_ministry_logo.png" alt="شعار وزارة الداخلية" class="w-16 h-16">
+            </div>
+            
+            <!-- Title - Center -->
+            <div class="text-center flex-1">
+                <h1 class="text-2xl font-bold text-gray-800">إدارة الحماية والسلامة من الحريق</h1>
+                <p class="text-gray-600">مملكة البحرين</p>
+                <p class="text-blue-600 font-semibold mt-2">العمليات</p>
+            </div>
+            
+            <!-- Civil Defense Logo - Left -->
+            <div class="flex items-center">
+                <img src="civil_defense_logo.png" alt="شعار الدفاع المدني" class="w-16 h-16">
+            </div>
+        </div>
+        
+        <div class="flex justify-between items-center mt-4 pt-4 border-t">
+            <div>
+                <span class="text-gray-700 font-semibold">مرحباً، </span>
+                <span id="userInfo" class="text-blue-600 font-bold"></span>
+            </div>
+            <button onclick="logout()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-semibold transition-colors">
+                تسجيل الخروج
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="mx-6 my-6">
+        <div class="bg-white rounded-lg p-6 card-shadow">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">البحث عن المنشآت</h2>
+            
+            <!-- Search Form -->
+            <div class="mb-6">
+                <!-- Search by Name (Priority) -->
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-semibold mb-2">البحث باسم المنشأة</label>
+                    <input type="text" id="searchByName" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="أدخل اسم المنشأة">
+                </div>
+                
+                <!-- Search by Address (Alternative) -->
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-semibold mb-2">البحث بالعنوان (في حال عدم توفر اسم المنشأة)</label>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <input type="text" id="searchByBuilding" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="رقم المبنى">
+                        </div>
+                        <div>
+                            <input type="text" id="searchByRoad" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="رقم الطريق">
+                        </div>
+                        <div>
+                            <input type="text" id="searchByComplex" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="رقم المجمع">
+                        </div>
+                    </div>
+                </div>
+                
+                <button onclick="searchFacilities()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+                    بحث
+                </button>
+            </div>
+
+            <!-- Search Results -->
+            <div id="searchResults" class="mt-6"></div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        const operationsUser = JSON.parse(localStorage.getItem('operationsUser'));
+        if (!operationsUser || !operationsUser.loggedIn) {
+            window.location.href = 'index.html';
+        }
+
+        // Display user info
+        document.getElementById('userInfo').textContent = operationsUser.username;
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('operationsUser');
+            window.location.href = 'index.html';
+        }
+
+        // Search facilities
+        function searchFacilities() {
+            const searchByName = document.getElementById('searchByName').value.toLowerCase().trim();
+            const searchByBuilding = document.getElementById('searchByBuilding').value.toLowerCase().trim();
+            const searchByRoad = document.getElementById('searchByRoad').value.toLowerCase().trim();
+            const searchByComplex = document.getElementById('searchByComplex').value.toLowerCase().trim();
+            
+            // Get facilities from localStorage
+            const facilities = JSON.parse(localStorage.getItem('facilities')) || [];
+            
+            // Filter facilities
+            const results = facilities.filter(facility => {
+                // Priority 1: Search by name (if provided)
+                if (searchByName) {
+                    return facility.facilityName && facility.facilityName.toLowerCase().includes(searchByName);
+                }
+                
+                // Priority 2: Search by address (if name not provided)
+                if (searchByBuilding || searchByRoad || searchByComplex) {
+                    const buildingMatch = !searchByBuilding || (facility.buildingNumber && facility.buildingNumber.toLowerCase().includes(searchByBuilding));
+                    const roadMatch = !searchByRoad || (facility.road && facility.road.toLowerCase().includes(searchByRoad));
+                    const complexMatch = !searchByComplex || (facility.complex && facility.complex.toLowerCase().includes(searchByComplex));
+                    
+                    return buildingMatch && roadMatch && complexMatch;
+                }
+                
+                // If no search criteria provided, return false
+                return false;
+            });
+
+            displayResults(results);
+        }
+
+        // Display search results
+        function displayResults(results) {
+            const resultsDiv = document.getElementById('searchResults');
+            
+            if (results.length === 0) {
+                resultsDiv.innerHTML = '<p class="text-gray-600 text-center py-8">لا توجد نتائج</p>';
+                return;
+            }
+
+            let html = '<div class="space-y-6">';
+            
+            results.forEach(facility => {
+                html += `
+                    <div class="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">${facility.facilityName}</h3>
+                                <p class="text-gray-600"><strong>رقم الطلب:</strong> ${facility.requestNumber}</p>
+                                <p class="text-gray-600"><strong>اسم المالك:</strong> ${facility.ownerName}</p>
+                                <p class="text-gray-600"><strong>رقم الهاتف:</strong> ${facility.phoneNumber}</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-600"><strong>العنوان:</strong></p>
+                                <p class="text-gray-700">${facility.area || '-'} - مجمع ${facility.complex || '-'} - طريق ${facility.road || '-'} - مبنى ${facility.buildingNumber || '-'}</p>
+                                <p class="text-gray-600 mt-2"><strong>عدد الطوابق:</strong> ${facility.floors || '-'}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-bold text-gray-800 mb-2">معلومات السلامة:</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="info-badge badge-info">عدد الطوابق: ${facility.floors || 'غير محدد'}</span>
+                                <span class="info-badge badge-info">عدد المخارج: ${facility.fireExits || '0'}</span>
+                                ${facility.hazardousMaterials ? `<span class="info-badge ${facility.hazardousMaterials === 'yes' ? 'badge-danger' : 'badge-yes'}">المواد الخطرة: ${facility.hazardousMaterials === 'yes' ? 'يوجد' : 'لا يوجد'}</span>` : ''}
+                                ${facility.dryRiser ? `<span class="info-badge ${facility.dryRiser === 'yes' ? 'badge-yes' : 'badge-no'}">Dry Riser: ${facility.dryRiser === 'yes' ? 'نعم' : 'لا'}</span>` : ''}
+                                ${facility.wetRiser ? `<span class="info-badge ${facility.wetRiser === 'yes' ? 'badge-yes' : 'badge-no'}">Wet Riser: ${facility.wetRiser === 'yes' ? 'نعم' : 'لا'}</span>` : ''}
+                            </div>
+                        </div>
+                        
+                        ${facility.engineeringMaps && facility.engineeringMaps.length > 0 ? `
+                            <div class="mt-4">
+                                <h4 class="font-bold text-gray-800 mb-3">الخرائط الهندسية:</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                    ${facility.engineeringMaps.map((map, index) => `
+                                        <div class="border rounded-lg p-2">
+                                            <img src="${map.data}" alt="${map.name}" class="map-image cursor-pointer" onclick="viewFullImage('${map.data}', '${map.name}')">
+                                            <p class="text-sm text-gray-600 text-center mt-2">${map.name}</p>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        ` : '<p class="text-gray-500 italic">لا توجد خرائط هندسية مرفوعة</p>'}
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            resultsDiv.innerHTML = html;
+        }
+
+        // View full image
+        function viewFullImage(imageSrc, imageName) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4';
+            modal.onclick = () => modal.remove();
+            
+            modal.innerHTML = `
+                <div class="max-w-6xl max-h-full overflow-auto">
+                    <div class="bg-white p-4 rounded-lg">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold">${imageName}</h3>
+                            <button onclick="this.closest('.fixed').remove()" class="text-red-600 hover:text-red-800 text-2xl font-bold">&times;</button>
+                        </div>
+                        <img src="${imageSrc}" alt="${imageName}" class="max-w-full h-auto">
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        // Auto-search on page load if there are facilities
+        window.addEventListener('load', () => {
+            const facilities = JSON.parse(localStorage.getItem('facilities')) || [];
+            if (facilities.length > 0) {
+                displayResults(facilities);
+            }
+        });
+    </script>
+</body>
+</html>
