@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم الذكية - إدارة الحماية والسلامة من الحريق</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .card-shadow {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .stat-card {
+            transition: transform 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Header -->
+    <div class="bg-white rounded-lg mx-6 mt-6 p-4 card-shadow">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <img src="interior_ministry_logo.png" alt="وزارة الداخلية" class="h-16">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">إدارة الحماية والسلامة من الحريق</h1>
+                    <p class="text-gray-600">مملكة البحرين</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="text-left">
+                    <p class="text-gray-600">مرحباً، <span id="userDisplay" class="font-semibold"></span></p>
+                    <button onclick="logout()" class="text-red-600 hover:text-red-800 text-sm">تسجيل الخروج</button>
+                </div>
+                <img src="civil_defense_logo.png" alt="الدفاع المدني" class="h-16">
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-6 py-8">
+        <div class="bg-white rounded-lg p-6 card-shadow mb-6">
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">لوحة التحكم الذكية</h2>
+            <p class="text-gray-600">تحليلات ذكية لبيانات السلامة من الحريق</p>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-lg p-6 card-shadow stat-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 text-sm">إجمالي المنشآت</p>
+                        <p id="totalFacilities" class="text-3xl font-bold text-blue-600">0</p>
+                    </div>
+                    <div class="bg-blue-100 p-3 rounded-full">
+                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg p-6 card-shadow stat-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 text-sm">إجمالي المخالفات</p>
+                        <p id="totalViolations" class="text-3xl font-bold text-red-600">0</p>
+                    </div>
+                    <div class="bg-red-100 p-3 rounded-full">
+                        <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg p-6 card-shadow stat-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 text-sm">مباني خطرة</p>
+                        <p id="dangerousBuildings" class="text-3xl font-bold text-orange-600">0</p>
+                    </div>
+                    <div class="bg-orange-100 p-3 rounded-full">
+                        <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg p-6 card-shadow stat-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 text-sm">مواد خطرة</p>
+                        <p id="hazardousMaterialsCount" class="text-3xl font-bold text-purple-600">0</p>
+                    </div>
+                    <div class="bg-purple-100 p-3 rounded-full">
+                        <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016zM12 9v2m0 4h.01"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row 1 -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <!-- Most Dangerous Buildings -->
+            <div class="bg-white rounded-lg p-6 card-shadow">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">أكثر المباني خطورة</h3>
+                <div id="dangerousBuildingsList" class="space-y-3 max-h-96 overflow-y-auto">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Most Common Violations -->
+            <div class="bg-white rounded-lg p-6 card-shadow">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">أكثر المخالفات تكراراً</h3>
+                <div class="chart-container">
+                    <canvas id="violationsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row 2 -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <!-- Monthly Analysis -->
+            <div class="bg-white rounded-lg p-6 card-shadow">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">تحليل شهري لحالات المشاكل</h3>
+                <div class="chart-container">
+                    <canvas id="monthlyChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Risk Prediction -->
+            <div class="bg-white rounded-lg p-6 card-shadow">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">المباني المعرضة للخطر</h3>
+                <p class="text-sm text-gray-600 mb-4">بناءً على السجل التاريخي والمخالفات المتكررة</p>
+                <div id="riskPredictionList" class="space-y-3 max-h-80 overflow-y-auto">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Back Button -->
+        <div class="text-center">
+            <button onclick="window.location.href='index.html'" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300">
+                العودة إلى الصفحة الرئيسية
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) {
+            window.location.href = 'index.html';
+        }
+        document.getElementById('userDisplay').textContent = currentUser;
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'index.html';
+        }
+
+        // Load data
+        const facilities = JSON.parse(localStorage.getItem('facilities') || '[]');
+        const inspections = JSON.parse(localStorage.getItem('inspections') || '[]');
+
+        // Calculate statistics
+        document.getElementById('totalFacilities').textContent = facilities.length;
+        
+        let totalViolations = 0;
+        inspections.forEach(inspection => {
+            if (inspection.violations && inspection.violations.length > 0) {
+                totalViolations += inspection.violations.length;
+            }
+        });
+        document.getElementById('totalViolations').textContent = totalViolations;
+
+        // Count dangerous buildings (with hazardous materials or many violations)
+        const dangerousBuildings = facilities.filter(f => {
+            const facilityViolations = inspections.filter(i => 
+                i.facilityName === f.facilityName || 
+                i.personalId === f.personalId
+            );
+            return f.hazardousMaterials === 'yes' || facilityViolations.length > 2;
+        });
+        document.getElementById('dangerousBuildings').textContent = dangerousBuildings.length;
+
+        // Count facilities with hazardous materials
+        const hazardousMaterialsCount = facilities.filter(f => f.hazardousMaterials === 'yes').length;
+        document.getElementById('hazardousMaterialsCount').textContent = hazardousMaterialsCount;
+
+        // Most Dangerous Buildings
+        const buildingsWithRisk = facilities.map(facility => {
+            const facilityInspections = inspections.filter(i => 
+                i.facilityName === facility.facilityName || 
+                i.personalId === facility.personalId
+            );
+            
+            let violationCount = 0;
+            facilityInspections.forEach(inspection => {
+                if (inspection.violations) {
+                    violationCount += inspection.violations.length;
+                }
+            });
+            
+            let riskScore = violationCount * 10;
+            if (facility.hazardousMaterials === 'yes') riskScore += 50;
+            if (facility.dryRiser === 'no') riskScore += 20;
+            if (facility.wetRiser === 'no') riskScore += 20;
+            if (parseInt(facility.fireExits) < 2) riskScore += 30;
+            
+            return {
+                ...facility,
+                violationCount,
+                riskScore
+            };
+        }).sort((a, b) => b.riskScore - a.riskScore).slice(0, 10);
+
+        const dangerousBuildingsList = document.getElementById('dangerousBuildingsList');
+        if (buildingsWithRisk.length > 0) {
+            buildingsWithRisk.forEach((building, index) => {
+                const riskLevel = building.riskScore > 80 ? 'عالي جداً' : building.riskScore > 50 ? 'عالي' : 'متوسط';
+                const riskColor = building.riskScore > 80 ? 'red' : building.riskScore > 50 ? 'orange' : 'yellow';
+                
+                dangerousBuildingsList.innerHTML += `
+                    <div class="border-r-4 border-${riskColor}-500 bg-gray-50 p-4 rounded">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold text-gray-800">${building.facilityName || 'غير محدد'}</p>
+                                <p class="text-sm text-gray-600">${building.governorate || ''} - ${building.area || ''}</p>
+                                <div class="flex gap-2 mt-2">
+                                    <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">المخالفات: ${building.violationCount}</span>
+                                    ${building.hazardousMaterials === 'yes' ? '<span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">مواد خطرة</span>' : ''}
+                                </div>
+                            </div>
+                            <div class="text-left">
+                                <p class="text-2xl font-bold text-${riskColor}-600">${building.riskScore}</p>
+                                <p class="text-xs text-gray-600">درجة الخطورة</p>
+                                <p class="text-xs font-semibold text-${riskColor}-600">${riskLevel}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        } else {
+            dangerousBuildingsList.innerHTML = '<p class="text-gray-500 text-center py-8">لا توجد بيانات كافية</p>';
+        }
+
+        // Most Common Violations Chart
+        const violationCounts = {};
+        inspections.forEach(inspection => {
+            if (inspection.violations) {
+                inspection.violations.forEach(violation => {
+                    const violationType = violation.type || 'غير محدد';
+                    violationCounts[violationType] = (violationCounts[violationType] || 0) + 1;
+                });
+            }
+        });
+
+        const sortedViolations = Object.entries(violationCounts)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 10);
+
+        const violationsChart = new Chart(document.getElementById('violationsChart'), {
+            type: 'bar',
+            data: {
+                labels: sortedViolations.map(v => v[0]),
+                datasets: [{
+                    label: 'عدد المخالفات',
+                    data: sortedViolations.map(v => v[1]),
+                    backgroundColor: 'rgba(239, 68, 68, 0.8)',
+                    borderColor: 'rgba(239, 68, 68, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+
+        // Monthly Analysis Chart
+        const monthlyData = {};
+        const months = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+        
+        inspections.forEach(inspection => {
+            if (inspection.date) {
+                const date = new Date(inspection.date);
+                const monthName = months[date.getMonth()];
+                monthlyData[monthName] = (monthlyData[monthName] || 0) + (inspection.violations ? inspection.violations.length : 0);
+            }
+        });
+
+        const monthlyChart = new Chart(document.getElementById('monthlyChart'), {
+            type: 'line',
+            data: {
+                labels: months,
+                datasets: [{
+                    label: 'عدد المخالفات',
+                    data: months.map(m => monthlyData[m] || 0),
+                    backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                    borderColor: 'rgba(59, 130, 246, 1)',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+
+        // Risk Prediction
+        const riskPredictionList = document.getElementById('riskPredictionList');
+        const predictedRiskBuildings = buildingsWithRisk.filter(b => b.riskScore > 40).slice(0, 8);
+        
+        if (predictedRiskBuildings.length > 0) {
+            predictedRiskBuildings.forEach(building => {
+                const predictionReason = [];
+                if (building.violationCount > 2) predictionReason.push('مخالفات متكررة');
+                if (building.hazardousMaterials === 'yes') predictionReason.push('وجود مواد خطرة');
+                if (building.dryRiser === 'no' || building.wetRiser === 'no') predictionReason.push('نقص في أنظمة الإطفاء');
+                if (parseInt(building.fireExits) < 2) predictionReason.push('عدد مخارج غير كافي');
+                
+                riskPredictionList.innerHTML += `
+                    <div class="border border-orange-200 bg-orange-50 p-4 rounded">
+                        <div class="flex justify-between items-start mb-2">
+                            <p class="font-bold text-gray-800">${building.facilityName || 'غير محدد'}</p>
+                            <span class="text-xs bg-orange-600 text-white px-2 py-1 rounded">احتمالية: ${Math.min(Math.round(building.riskScore), 100)}%</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">${building.governorate || ''} - ${building.area || ''}</p>
+                        <div class="text-xs text-gray-700">
+                            <p class="font-semibold mb-1">أسباب التوقع:</p>
+                            <ul class="list-disc list-inside space-y-1">
+                                ${predictionReason.map(reason => `<li>${reason}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            });
+        } else {
+            riskPredictionList.innerHTML = '<p class="text-gray-500 text-center py-8">لا توجد مباني معرضة للخطر حالياً</p>';
+        }
+    </script>
+</body>
+</html>

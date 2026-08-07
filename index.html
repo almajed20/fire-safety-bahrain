@@ -1,0 +1,2018 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة الحماية والسلامة من الحريق - مملكة البحرين</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); }
+        .card-shadow { box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .btn-primary { background: linear-gradient(45deg, #4f46e5, #7c3aed); }
+        .btn-primary:hover { background: linear-gradient(45deg, #4338ca, #6d28d9); }
+        .service-card { 
+            background: white; 
+            border-radius: 16px; 
+            padding: 24px; 
+            text-align: center; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .service-card:hover { transform: translateY(-4px); }
+        .search-section {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <!-- Login Screen -->
+    <div id="loginScreen" class="min-h-screen gradient-bg flex items-center justify-center">
+        <div class="bg-white p-8 rounded-lg card-shadow w-full max-w-md">
+            <div class="text-center mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <img src="interior_ministry_logo.png" alt="شعار وزارة الداخلية" class="w-16 h-16">
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-800">إدارة الحماية والسلامة</h2>
+                        <p class="text-sm text-gray-500">مملكة البحرين</p>
+                    </div>
+                    <img src="civil_defense_logo.png" alt="شعار الدفاع المدني" class="w-16 h-16">
+                </div>
+                <h2 class="text-xl font-bold text-gray-700" id="loginTitle">تسجيل دخول الموظفين</h2>
+                <div class="flex gap-2 mt-4 mb-4">
+                    <button type="button" onclick="setLoginType('employee')" id="employeeBtn" class="flex-1 py-2 px-4 rounded-lg font-semibold bg-blue-600 text-white">موظف</button>
+                    <button type="button" onclick="setLoginType('inspector')" id="inspectorBtn" class="flex-1 py-2 px-4 rounded-lg font-semibold bg-gray-200 text-gray-700">مفتش</button>
+                    <button type="button" onclick="setLoginType('operations')" id="operationsBtn" class="flex-1 py-2 px-4 rounded-lg font-semibold bg-gray-200 text-gray-700">ضابط عمليات</button>
+                </div>
+            </div>
+            <form id="loginForm">
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-semibold mb-2">اسم المستخدم:</label>
+                    <input type="text" id="username" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="أدخل اسم المستخدم" required>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 font-semibold mb-2">كلمة المرور:</label>
+                    <input type="password" id="password" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="أدخل كلمة المرور" required>
+                </div>
+                <button type="submit" class="w-full btn-primary text-white py-3 rounded-lg font-semibold">تسجيل الدخول</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Public Interface (Hidden) -->
+    <div id="publicInterface" class="min-h-screen" style="display: none;">
+        <!-- Header -->
+        <div class="bg-white rounded-lg mx-6 mt-6 p-4 card-shadow">
+            <div class="flex justify-between items-center">
+                <!-- Ministry of Interior Logo - Right -->
+                <div class="flex items-center">
+                    <img src="interior_ministry_logo.png" alt="شعار وزارة الداخلية" class="w-16 h-16">
+                </div>
+                
+                <!-- Title - Center -->
+                <div class="text-center flex-1">
+                    <h1 class="text-2xl font-bold text-gray-800">إدارة الحماية والسلامة من الحريق</h1>
+                    <span class="text-lg text-gray-600">مملكة البحرين</span>
+                </div>
+                
+                <!-- Civil Defense Logo - Left -->
+                <div class="flex items-center">
+                    <img src="civil_defense_logo.png" alt="شعار الدفاع المدني" class="w-16 h-16">
+                </div>
+            </div>
+        </div>
+
+        <!-- Service Cards -->
+        <div class="container mx-auto p-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
+                <div class="service-card">
+                    <div class="text-4xl mb-4">🧯</div>
+                    <h3 class="font-bold text-lg mb-2">معدات الإطفاء</h3>
+                    <p class="text-sm text-gray-600">وجود طفايات الحريق في جميع أنحاء المبنى</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="text-4xl mb-4">🚪</div>
+                    <h3 class="font-bold text-lg mb-2">مخارج الطوارئ</h3>
+                    <p class="text-sm text-gray-600">تأكد من وجود مخارج الطوارئ واضحة وغير مسدودة</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="text-4xl mb-4">⚡</div>
+                    <h3 class="font-bold text-lg mb-2">السلامة الكهربائية</h3>
+                    <p class="text-sm text-gray-600">فحص المعدات الكهربائية وتجهيز الأجهزة الواقية</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="text-4xl mb-4">🔥</div>
+                    <h3 class="font-bold text-lg mb-2">الوقاية من الحرائق</h3>
+                    <p class="text-sm text-gray-600">تأكد من وجود أجهزة الحريق في جميع أنحاء المبنى</p>
+                </div>
+            </div>
+
+            <!-- Search Section -->
+            <div class="search-section">
+                <h2 class="text-xl font-bold text-center mb-6">البحث عن المخالفات</h2>
+                
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-semibold mb-2">نوع البحث:</label>
+                    <select id="searchType" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <option value="">اختر نوع البحث</option>
+                        <option value="personal">الرقم الشخصي</option>
+                        <option value="phone">رقم الهاتف</option>
+                        <option value="registration">رقم السجل</option>
+                        <option value="violation">رقم المخالفة</option>
+                    </select>
+                </div>
+                
+                <div class="mb-4">
+                    <input type="text" id="searchInput" class="w-full p-4 border border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-500" 
+                           placeholder="أدخل نوع البحث أولاً">
+                </div>
+                
+                <div class="text-center">
+                    <button onclick="performViolationSearch()" class="bg-gray-600 hover:bg-gray-700 text-white px-8 py-3 rounded-lg font-semibold">
+                        بحث
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center text-white py-6">
+            <p class="text-sm">© 2024 إدارة الحماية والسلامة من الحريق - مملكة البحرين</p>
+            <p class="text-xs mt-2">الاستفسارات: 17239300 | البريد الإلكتروني: info@fire-safety.gov.bh</p>
+            
+            <!-- Login Buttons for Staff Only -->
+            <div class="flex justify-center gap-4 mt-4">
+                <button onclick="showLogin()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-white text-sm font-semibold transition-colors">
+                    تسجيل دخول الموظفين
+                </button>
+
+            </div>
+            
+            <!-- Developer Credit -->
+            <p class="text-xs mt-3 opacity-75">قام بإنشائه: عبدالله الماجد</p>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard (For Employees) -->
+    <div id="adminDashboard" class="min-h-screen" style="display: none;">
+        <!-- Header -->
+        <div class="bg-white rounded-lg mx-6 mt-6 p-4 card-shadow">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <img src="interior_ministry_logo.png" alt="شعار وزارة الداخلية" class="w-12 h-12">
+                    <h1 class="text-xl font-bold text-gray-800">إدارة الحماية والسلامة من الحريق</h1>
+                    <span class="text-sm text-gray-600">مملكة البحرين</span>
+                    <img src="civil_defense_logo.png" alt="شعار الدفاع المدني" class="w-12 h-12">
+                </div>
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <span id="userInfo" class="text-sm text-gray-600">مرحباً، admin</span>
+                    <button onclick="logout()" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-sm text-white">تسجيل الخروج</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="container mx-auto p-6">
+            <div class="bg-white rounded-lg card-shadow p-6 mb-6">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <button onclick="showSection('violations')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-semibold transition-colors">
+                        المخالفات الجديدة
+                    </button>
+                    <button onclick="showSection('payments')" class="bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-semibold transition-colors">
+                        تحتاج إلى الدفع
+                    </button>
+                    <button onclick="showSection('inspected')" class="bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-lg font-semibold transition-colors">
+                        المباني المفحوصة
+                    </button>
+                    <button onclick="showSection('facilityReg')" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-3 rounded-lg font-semibold transition-colors">
+                        تسجيل المنشآت
+                    </button>
+                    <button onclick="showSection('facilitySearch')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-3 rounded-lg font-semibold transition-colors">
+                        البحث عن المنشآت
+                    </button>
+                    <button onclick="window.location.href='dashboard.html'" class="bg-gradient-to-r from-orange-500 to-pink-600 hover:from-orange-600 hover:to-pink-700 text-white px-4 py-3 rounded-lg font-semibold transition-colors">
+                        لوحة التحكم الذكية
+                    </button>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div id="contentArea" class="bg-white rounded-lg card-shadow p-6" style="display: none;">
+            </div>
+
+            <!-- Account Management (Collapsible) -->
+            <div class="bg-white rounded-lg card-shadow p-6 mt-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4 cursor-pointer" onclick="toggleAccountSection()">
+                    <span id="accountToggle">▶</span> إدارة الحسابات
+                </h3>
+                <div id="accountSection" class="grid grid-cols-1 md:grid-cols-2 gap-6" style="display: none;">
+                    <div>
+                        <h4 class="font-semibold text-gray-700 mb-3">إنشاء حساب جديد</h4>
+                        <form id="createAccountForm" class="space-y-4">
+                            <input type="text" placeholder="الاسم الأول" class="w-full p-3 border border-gray-300 rounded-lg" required>
+                            <input type="text" placeholder="اسم المستخدم" class="w-full p-3 border border-gray-300 rounded-lg" required>
+                            <input type="password" placeholder="كلمة المرور" class="w-full p-3 border border-gray-300 rounded-lg" required>
+                            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-semibold">إنشاء حساب</button>
+                        </form>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-700 mb-3">تغيير كلمة المرور</h4>
+                        <form id="changePasswordForm" class="space-y-4">
+                            <input type="password" placeholder="كلمة المرور الحالية" class="w-full p-3 border border-gray-300 rounded-lg" required>
+                            <input type="password" placeholder="كلمة المرور الجديدة" class="w-full p-3 border border-gray-300 rounded-lg" required>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold">تغيير كلمة المرور</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center text-white py-6">
+            <p class="text-sm">© 2024 إدارة الحماية والسلامة من الحريق - مملكة البحرين</p>
+            <p class="text-xs mt-2">الاستفسارات: 17239300 | البريد الإلكتروني: info@fire-safety.gov.bh</p>
+            
+            <!-- Login Buttons for Staff Only -->
+            <div class="flex justify-center gap-4 mt-4">
+                <button onclick="showLogin()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-white text-sm font-semibold transition-colors">
+                    تسجيل دخول الموظفين
+                </button>
+
+            </div>
+            
+            <!-- Developer Credit -->
+            <p class="text-xs mt-3 opacity-75">قام بإنشائه: عبدالله الماجد</p>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentUser = null;
+        let facilities = [];
+        let reports = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLogin();
+            setupEventListeners();
+        });
+
+        function checkLogin() {
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showAdminDashboard();
+            } else {
+                showLoginScreen();
+            }
+        }
+
+        function showLoginScreen() {
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('publicInterface').style.display = 'none';
+            document.getElementById('adminDashboard').style.display = 'none';
+        }
+
+        function showPublicInterface() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('publicInterface').style.display = 'block';
+            document.getElementById('adminDashboard').style.display = 'none';
+        }
+
+        function showAdminDashboard() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('publicInterface').style.display = 'none';
+            document.getElementById('adminDashboard').style.display = 'block';
+            if (currentUser) {
+                document.getElementById('userInfo').textContent = `مرحباً، ${currentUser.username}`;
+            }
+        }
+
+        let loginType = 'employee'; // Default login type
+
+        function setLoginType(type) {
+            loginType = type;
+            const employeeBtn = document.getElementById('employeeBtn');
+            const inspectorBtn = document.getElementById('inspectorBtn');
+            const operationsBtn = document.getElementById('operationsBtn');
+            
+            // Reset all buttons
+            employeeBtn.className = 'flex-1 py-2 px-4 rounded-lg font-semibold bg-gray-200 text-gray-700';
+            inspectorBtn.className = 'flex-1 py-2 px-4 rounded-lg font-semibold bg-gray-200 text-gray-700';
+            operationsBtn.className = 'flex-1 py-2 px-4 rounded-lg font-semibold bg-gray-200 text-gray-700';
+            
+            // Highlight selected button
+            if (type === 'employee') {
+                employeeBtn.className = 'flex-1 py-2 px-4 rounded-lg font-semibold bg-blue-600 text-white';
+            } else if (type === 'inspector') {
+                inspectorBtn.className = 'flex-1 py-2 px-4 rounded-lg font-semibold bg-blue-600 text-white';
+            } else if (type === 'operations') {
+                operationsBtn.className = 'flex-1 py-2 px-4 rounded-lg font-semibold bg-blue-600 text-white';
+            }
+        }
+
+        function showLogin() {
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('publicInterface').style.display = 'none';
+            document.getElementById('adminDashboard').style.display = 'none';
+        }
+
+        function setupEventListeners() {
+            // Login form
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                if (loginType === 'employee') {
+                    // Employee login
+                    if (username === 'abdulla.almajed' && password === 'abdulla@20') {
+                        currentUser = { username: 'abdulla.almajed', role: 'admin' };
+                        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                        showAdminDashboard();
+                    } else {
+                        alert('اسم المستخدم أو كلمة المرور غير صحيحة');
+                    }
+                } else if (loginType === 'inspector') {
+                    // Inspector login
+                    if (username === 'abdulla.almajed' && password === 'abdulla@20') {
+                        // Store inspector credentials and redirect
+                        localStorage.setItem('inspectorUser', JSON.stringify({ username: username, loggedIn: true }));
+                        window.location.href = 'inspector.html';
+                    } else {
+                        alert('اسم المستخدم أو كلمة المرور غير صحيحة');
+                    }
+                } else if (loginType === 'operations') {
+                    // Operations Officer login
+                    if (username === 'abdulla.almajed' && password === 'abdulla@20') {
+                        // Store operations credentials and redirect
+                        localStorage.setItem('operationsUser', JSON.stringify({ username: username, loggedIn: true }));
+                        window.location.href = 'operations.html';
+                    } else {
+                        alert('اسم المستخدم أو كلمة المرور غير صحيحة');
+                    }
+                }
+            });
+
+            // Account forms
+            document.getElementById('createAccountForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('تم إنشاء الحساب بنجاح');
+                this.reset();
+            });
+
+            document.getElementById('changePasswordForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('تم تغيير كلمة المرور بنجاح');
+                this.reset();
+            });
+        }
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            currentUser = null;
+            showPublicInterface();
+        }
+
+        function toggleAccountSection() {
+            const section = document.getElementById('accountSection');
+            const toggle = document.getElementById('accountToggle');
+            if (section.style.display === 'none') {
+                section.style.display = 'grid';
+                toggle.textContent = '▼';
+            } else {
+                section.style.display = 'none';
+                toggle.textContent = '▶';
+            }
+        }
+
+        // Update search input placeholder based on selected type
+        document.getElementById('searchType').addEventListener('change', function() {
+            const searchInput = document.getElementById('searchInput');
+            const selectedType = this.value;
+            
+            switch(selectedType) {
+                case 'personal':
+                    searchInput.placeholder = 'أدخر الرقم الشخصي';
+                    break;
+                case 'phone':
+                    searchInput.placeholder = 'أدخل رقم الهاتف';
+                    break;
+                case 'registration':
+                    searchInput.placeholder = 'أدخل رقم السجل';
+                    break;
+                case 'violation':
+                    searchInput.placeholder = 'أدخل رقم المخالفة';
+                    break;
+                default:
+                    searchInput.placeholder = 'أدخل نوع البحث أولاً';
+            }
+        });
+
+        function performViolationSearch() {
+            const searchType = document.getElementById('searchType').value;
+            const searchInput = document.getElementById('searchInput').value.trim();
+            
+            if (!searchType) {
+                alert('يرجى اختيار نوع البحث أولاً');
+                return;
+            }
+            
+            if (!searchInput) {
+                alert('يرجى إدخال قيمة البحث');
+                return;
+            }
+            
+            // Load reports from localStorage
+            const savedReports = localStorage.getItem('reports');
+            let reports = [];
+            if (savedReports) {
+                reports = JSON.parse(savedReports);
+            }
+            
+            // Search in reports
+            let results = [];
+            
+            reports.forEach(report => {
+                let match = false;
+                
+                switch(searchType) {
+                    case 'personal':
+                        if (report.personalId && report.personalId.includes(searchInput)) {
+                            match = true;
+                        }
+                        break;
+                    case 'phone':
+                        if (report.phoneNumber && report.phoneNumber.includes(searchInput)) {
+                            match = true;
+                        }
+                        break;
+                    case 'registration':
+                        if (report.registrationNumber && report.registrationNumber.includes(searchInput)) {
+                            match = true;
+                        }
+                        break;
+                    case 'violation':
+                        if (report.reportId && report.reportId.includes(searchInput)) {
+                            match = true;
+                        }
+                        break;
+                }
+                
+                if (match) {
+                    results.push(report);
+                }
+            });
+            
+            // Display results
+            displaySearchResults(results, searchType, searchInput);
+        }
+
+        function displaySearchResults(results, searchType, searchValue) {
+            const searchSection = document.querySelector('.search-section');
+            
+            // Remove existing results
+            const existingResults = document.getElementById('searchResults');
+            if (existingResults) {
+                existingResults.remove();
+            }
+            
+            // Create results container
+            const resultsContainer = document.createElement('div');
+            resultsContainer.id = 'searchResults';
+            resultsContainer.className = 'mt-8 bg-white rounded-lg p-6 shadow-lg';
+            
+            if (results.length === 0) {
+                resultsContainer.innerHTML = `
+                    <div class="text-center py-8">
+                        <div class="text-6xl mb-4">🔍</div>
+                        <h3 class="text-xl font-bold text-gray-700 mb-2">لا توجد نتائج</h3>
+                        <p class="text-gray-600">لم يتم العثور على أي مخالفات بالبحث: ${searchValue}</p>
+                        <button onclick="clearSearchResults()" class="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+                            بحث جديد
+                        </button>
+                    </div>
+                `;
+            } else {
+                resultsContainer.innerHTML = `
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">نتائج البحث</h3>
+                        <p class="text-gray-600">تم العثور على ${results.length} نتيجة للبحث: ${searchValue}</p>
+                        <button onclick="clearSearchResults()" class="mt-2 bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 text-sm">
+                            بحث جديد
+                        </button>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        ${results.map(report => `
+                            <div class="border border-gray-200 rounded-lg p-6 bg-gray-50">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div>
+                                        <h4 class="font-bold text-lg text-gray-800">${report.facilityName || 'منشأة غير محددة'}</h4>
+                                        <p class="text-gray-600">رقم التقرير: ${report.reportId}</p>
+                                        <p class="text-gray-600">تاريخ الفحص: ${new Date(report.inspectionDate).toLocaleDateString('ar-SA')}</p>
+                                        <p class="text-gray-600">المفتش: ${report.inspector}</p>
+                                    </div>
+                                    <div class="text-right">
+                                        ${getStatusBadge(report.status)}
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                    <div class="bg-white p-3 rounded">
+                                        <h5 class="font-semibold text-gray-700 mb-2">معلومات المنشأة</h5>
+                                        <p class="text-sm text-gray-600">المالك: ${report.ownerName || 'غير محدد'}</p>
+                                        <p class="text-sm text-gray-600">الهاتف: ${report.phoneNumber || 'غير محدد'}</p>
+                                        <p class="text-sm text-gray-600">المنطقة: ${report.area || 'غير محدد'}</p>
+                                    </div>
+                                    
+                                    <div class="bg-white p-3 rounded">
+                                        <h5 class="font-semibold text-gray-700 mb-2">حالة المخالفات</h5>
+                                        ${report.violations && report.violations.length > 0 ? `
+                                            <p class="text-sm text-red-600">عدد المخالفات: ${report.violations.length}</p>
+                                            <p class="text-sm text-red-600">المبلغ الإجمالي: ${report.totalAmount || 0} د.ب</p>
+                                            ${report.status === 'pending_payment' ? '<p class="text-sm text-orange-600 font-semibold">في انتظار الدفع</p>' : ''}
+                                            ${report.status === 'inspected' && report.paymentStatus === 'paid' ? '<p class="text-sm text-green-600 font-semibold">تم الدفع</p>' : ''}
+                                        ` : `
+                                            <p class="text-sm text-green-600 font-semibold">✓ مبنى نظيف - لا توجد مخالفات</p>
+                                        `}
+                                    </div>
+                                </div>
+                                
+                                ${report.violations && report.violations.length > 0 ? `
+                                    <div class="bg-white p-3 rounded">
+                                        <h5 class="font-semibold text-gray-700 mb-2">تفاصيل المخالفات</h5>
+                                        <div class="space-y-2">
+                                            ${report.violations.map(v => `
+                                                <div class="flex justify-between items-center py-1 border-b border-gray-100 last:border-b-0">
+                                                    <span class="text-sm text-gray-700">${v.type}</span>
+                                                    <span class="text-sm font-semibold ${v.paymentRequired ? 'text-red-600' : 'text-gray-600'}">${v.amount || 0} د.ب</span>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+            
+            searchSection.appendChild(resultsContainer);
+            
+            // Scroll to results
+            resultsContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function getStatusBadge(status) {
+            switch(status) {
+                case 'new':
+                case 'pending_approval':
+                    return '<span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold">جديد</span>';
+                case 'pending_payment':
+                    return '<span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-semibold">في انتظار الدفع</span>';
+                case 'inspected':
+                    return '<span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">مكتمل</span>';
+                default:
+                    return '<span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-semibold">غير محدد</span>';
+            }
+        }
+
+        function clearSearchResults() {
+            const existingResults = document.getElementById('searchResults');
+            if (existingResults) {
+                existingResults.remove();
+            }
+            
+            // Clear search inputs
+            document.getElementById('searchType').value = '';
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchInput').placeholder = 'أدخل نوع البحث أولاً';
+        }
+
+        function showViolationSearchResults(searchType, searchTerm) {
+            const contentArea = document.getElementById('contentArea');
+            contentArea.style.display = 'block';
+            
+            // Mock search results
+            contentArea.innerHTML = `
+                <div class="bg-white rounded-lg card-shadow p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">نتائج البحث</h2>
+                    <div class="mb-4">
+                        <p class="text-gray-600">البحث عن: <strong>${searchTerm}</strong> في <strong>${getSearchTypeLabel(searchType)}</strong></p>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-semibold">مطعم الخليج</h3>
+                                <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-sm">مخالفة</span>
+                            </div>
+                            <p class="text-gray-600 text-sm">رقم المخالفة: V-2024-001</p>
+                            <p class="text-gray-600 text-sm">التاريخ: 2024-01-15</p>
+                            <p class="text-gray-600 text-sm">المبلغ: 1500 د.ب</p>
+                            <button onclick="editViolation('V-2024-001')" class="mt-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm">
+                                تعديل
+                            </button>
+                        </div>
+                        
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-semibold">مركز التسوق الحديث</h3>
+                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">قيد المراجعة</span>
+                            </div>
+                            <p class="text-gray-600 text-sm">رقم المخالفة: V-2024-002</p>
+                            <p class="text-gray-600 text-sm">التاريخ: 2024-01-20</p>
+                            <p class="text-gray-600 text-sm">المبلغ: 2000 د.ب</p>
+                            <button onclick="editViolation('V-2024-002')" class="mt-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm">
+                                تعديل
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <button onclick="hideContentArea()" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold">
+                            العودة
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getSearchTypeLabel(type) {
+            switch(type) {
+                case 'personal': return 'الرقم الشخصي';
+                case 'phone': return 'رقم الهاتف';
+                case 'registration': return 'رقم السجل';
+                case 'violation': return 'رقم المخالفة';
+                default: return '';
+            }
+        }
+
+        function editViolation(violationId) {
+            const contentArea = document.getElementById('contentArea');
+            contentArea.innerHTML = `
+                <div class="bg-white rounded-lg card-shadow p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">تعديل المخالفة: ${violationId}</h2>
+                    
+                    <form class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">اسم المنشأة</label>
+                                <input type="text" value="مطعم الخليج" class="w-full p-3 border border-gray-300 rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">نوع المخالفة</label>
+                                <select class="w-full p-3 border border-gray-300 rounded-lg">
+                                    <option>طفايات الحريق</option>
+                                    <option>مخارج الطوارئ</option>
+                                    <option>السلامة الكهربائية</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">المبلغ (د.ب)</label>
+                                <input type="number" value="1500" class="w-full p-3 border border-gray-300 rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">الحالة</label>
+                                <select class="w-full p-3 border border-gray-300 rounded-lg">
+                                    <option>مخالفة</option>
+                                    <option>قيد المراجعة</option>
+                                    <option>مدفوعة</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">ملاحظات</label>
+                            <textarea class="w-full p-3 border border-gray-300 rounded-lg h-24" placeholder="أدخل الملاحظات"></textarea>
+                        </div>
+                        
+                        <div class="flex gap-4">
+                            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold">
+                                حفظ التعديلات
+                            </button>
+                            <button type="button" onclick="hideContentArea()" class="bg-gray-500 hover:bg-gray-600 text-white px-8 py-3 rounded-lg font-semibold">
+                                إلغاء
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+        }
+
+        function hideContentArea() {
+            document.getElementById('contentArea').style.display = 'none';
+        }
+
+        function showSection(section) {
+            const contentArea = document.getElementById('contentArea');
+            contentArea.style.display = 'block';
+            
+            switch(section) {
+                case 'violations':
+                    showViolations();
+                    break;
+
+                case 'payments':
+                    showPayments();
+                    break;
+                case 'inspected':
+                    showInspected();
+                    break;
+                case 'facilityReg':
+                    showFacilityRegistration();
+                    break;
+                case 'facilitySearch':
+                    showFacilitySearch();
+                    break;
+            }
+        }
+
+        function showViolations() {
+            const contentArea = document.getElementById('contentArea');
+            contentArea.style.display = 'block';
+            
+            // Load reports from localStorage
+            const savedReports = localStorage.getItem('reports');
+            if (savedReports) {
+                reports = JSON.parse(savedReports);
+            }
+            
+            const newViolations = reports.filter(r => r.status === 'new' || !r.status);
+            
+            contentArea.innerHTML = `
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">المخالفات الجديدة</h2>
+                <div id="violationsList" class="space-y-4">
+                    ${newViolations.map(report => `
+                        <div class="border border-gray-200 rounded-lg p-6 bg-white shadow-sm">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="font-bold text-lg text-gray-800">${report.facilityName || 'منشأة غير محددة'}</h3>
+                                    <p class="text-gray-600">المفتش: ${report.inspector || 'غير محدد'}</p>
+                                    <p class="text-gray-600">التاريخ: ${report.date || new Date().toLocaleDateString('ar-SA')}</p>
+                                    <p class="text-gray-600">رقم التقرير: ${report.reportId || 'غير محدد'}</p>
+                                </div>
+                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold">جديد</span>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <h4 class="font-semibold text-gray-700 mb-2">المخالفات:</h4>
+                                <div class="bg-gray-50 p-3 rounded-lg">
+                                    ${report.violations && report.violations.length > 0 ? 
+                                        report.violations.map(v => `
+                                            <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-b-0">
+                                                <span class="text-gray-700">${v.type || v}</span>
+                                                <span class="text-red-600 font-semibold">${v.amount || '500'} د.ب</span>
+                                            </div>
+                                        `).join('') 
+                                        : '<p class="text-green-600">لا توجد مخالفات - المبنى نظيف</p>'
+                                    }
+                                </div>
+                                <div class="mt-2">
+                                    <p class="text-sm text-gray-600"><strong>إجمالي المبلغ:</strong> ${calculateTotalAmount(report.violations)} د.ب</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex gap-3 flex-wrap">
+                                ${report.violations && report.violations.length > 0 ? `
+                                    <button onclick="approveViolation('${report.reportId}')" 
+                                            class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+                                        ✓ موافقة على المخالفة
+                                    </button>
+                                    <button onclick="editViolationReport('${report.reportId}')" 
+                                            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+                                        ✏️ تعديل
+                                    </button>
+                                    <button onclick="cancelViolation('${report.reportId}')" 
+                                            class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+                                        ✗ إلغاء المخالفة
+                                    </button>
+                                ` : `
+                                    <button onclick="markAsInspected('${report.reportId}')" 
+                                            class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+                                        ✓ تأكيد الفحص - مبنى نظيف
+                                    </button>
+                                `}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                ${newViolations.length === 0 ? '<div class="text-center py-12"><p class="text-gray-500 text-lg">لا توجد مخالفات جديدة</p></div>' : ''}
+                <div class="mt-6">
+                    <button onclick="hideContentArea()" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold">
+                        العودة
+                    </button>
+                </div>
+            `;
+        }
+
+        function calculateTotalAmount(violations) {
+            if (!violations || violations.length === 0) return 0;
+            return violations.reduce((total, v) => {
+                const amount = parseInt(v.amount) || 500;
+                return total + amount;
+            }, 0);
+        }
+
+        function approveViolation(reportId) {
+            const reportIndex = reports.findIndex(r => r.reportId === reportId);
+            if (reportIndex !== -1) {
+                reports[reportIndex].status = 'pending_payment';
+                reports[reportIndex].approvedDate = new Date().toLocaleDateString('ar-SA');
+                localStorage.setItem('reports', JSON.stringify(reports));
+                alert('تم الموافقة على المخالفة. تم نقلها إلى قائمة "تحتاج إلى الدفع"');
+                showViolations(); // Refresh the view
+            }
+        }
+
+        function cancelViolation(reportId) {
+            const reportIndex = reports.findIndex(r => r.reportId === reportId);
+            if (reportIndex !== -1) {
+                reports[reportIndex].status = 'inspected';
+                reports[reportIndex].cancelledDate = new Date().toLocaleDateString('ar-SA');
+                reports[reportIndex].cancelReason = 'تم إلغاء المخالفة من قبل الموظف';
+                localStorage.setItem('reports', JSON.stringify(reports));
+                alert('تم إلغاء المخالفة. تم نقل المبنى إلى قائمة "المباني المفحوصة"');
+                showViolations(); // Refresh the view
+            }
+        }
+
+        function markAsInspected(reportId) {
+            const reportIndex = reports.findIndex(r => r.reportId === reportId);
+            if (reportIndex !== -1) {
+                reports[reportIndex].status = 'inspected';
+                reports[reportIndex].inspectedDate = new Date().toLocaleDateString('ar-SA');
+                localStorage.setItem('reports', JSON.stringify(reports));
+                alert('تم تأكيد الفحص. تم نقل المبنى إلى قائمة "المباني المفحوصة"');
+                showViolations(); // Refresh the view
+            }
+        }
+
+        function editViolationReport(reportId) {
+            const report = reports.find(r => r.reportId === reportId);
+            if (!report) return;
+            
+            const contentArea = document.getElementById('contentArea');
+            contentArea.innerHTML = `
+                <div class="bg-white rounded-lg p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">تعديل التقرير: ${report.reportId}</h2>
+                    
+                    <form id="editReportForm" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">اسم المنشأة</label>
+                                <input type="text" id="editFacilityName" value="${report.facilityName || ''}" 
+                                       class="w-full p-3 border border-gray-300 rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">المفتش</label>
+                                <input type="text" id="editInspector" value="${report.inspector || ''}" 
+                                       class="w-full p-3 border border-gray-300 rounded-lg">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">المخالفات</label>
+                            <div id="violationsEdit" class="space-y-3">
+                                ${report.violations ? report.violations.map((v, index) => `
+                                    <div class="flex gap-3 items-center bg-gray-50 p-3 rounded-lg">
+                                        <input type="text" value="${v.type || v}" 
+                                               class="flex-1 p-2 border border-gray-300 rounded" 
+                                               placeholder="نوع المخالفة">
+                                        <input type="number" value="${v.amount || 500}" 
+                                               class="w-32 p-2 border border-gray-300 rounded" 
+                                               placeholder="المبلغ">
+                                        <button type="button" onclick="removeViolation(${index})" 
+                                                class="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600">
+                                            حذف
+                                        </button>
+                                    </div>
+                                `).join('') : ''}
+                            </div>
+                            <button type="button" onclick="addViolation()" 
+                                    class="mt-3 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                                إضافة مخالفة
+                            </button>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">ملاحظات</label>
+                            <textarea id="editNotes" class="w-full p-3 border border-gray-300 rounded-lg h-24" 
+                                      placeholder="أدخل الملاحظات">${report.notes || ''}</textarea>
+                        </div>
+                        
+                        <div class="flex gap-4">
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold">
+                                حفظ التعديلات
+                            </button>
+                            <button type="button" onclick="showViolations()" 
+                                    class="bg-gray-500 hover:bg-gray-600 text-white px-8 py-3 rounded-lg font-semibold">
+                                إلغاء
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            
+            // Add form handler
+            document.getElementById('editReportForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveReportEdits(reportId);
+            });
+        }
+
+        function saveReportEdits(reportId) {
+            const reportIndex = reports.findIndex(r => r.reportId === reportId);
+            if (reportIndex === -1) return;
+            
+            const facilityName = document.getElementById('editFacilityName').value;
+            const inspector = document.getElementById('editInspector').value;
+            const notes = document.getElementById('editNotes').value;
+            
+            // Collect violations
+            const violationInputs = document.querySelectorAll('#violationsEdit > div');
+            const violations = [];
+            violationInputs.forEach(div => {
+                const typeInput = div.querySelector('input[type="text"]');
+                const amountInput = div.querySelector('input[type="number"]');
+                if (typeInput && amountInput && typeInput.value.trim()) {
+                    violations.push({
+                        type: typeInput.value.trim(),
+                        amount: parseInt(amountInput.value) || 500
+                    });
+                }
+            });
+            
+            // Update report
+            reports[reportIndex].facilityName = facilityName;
+            reports[reportIndex].inspector = inspector;
+            reports[reportIndex].violations = violations;
+            reports[reportIndex].notes = notes;
+            reports[reportIndex].lastModified = new Date().toLocaleDateString('ar-SA');
+            
+            localStorage.setItem('reports', JSON.stringify(reports));
+            alert('تم حفظ التعديلات بنجاح');
+            showViolations();
+        }
+
+
+
+        function showPayments() {
+            const contentArea = document.getElementById('contentArea');
+            contentArea.style.display = 'block';
+            
+            // Load reports from localStorage
+            const savedReports = localStorage.getItem('reports');
+            if (savedReports) {
+                reports = JSON.parse(savedReports);
+            }
+            
+            const pendingPayments = reports.filter(r => r.status === 'pending_payment');
+            
+            contentArea.innerHTML = `
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">المخالفات التي تحتاج إلى الدفع</h2>
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                    <div class="flex items-start gap-3">
+                        <span class="text-2xl">ℹ️</span>
+                        <div>
+                            <p class="font-semibold text-blue-800 mb-1">ملاحظة: نظام الدفع الخارجي</p>
+                            <p class="text-blue-700 text-sm">عند وصول المخالفة لهذه المرحلة، يقوم الموظف بتسجيل بيانات صاحب المنشأة في النظام الخارجي المخصص للدفع. بعد تأكيد الدفع من النظام الخارجي، يتم الضغط على <strong>"تأكيد الدفع"</strong> هنا لنقل المبنى إلى قائمة المباني المفحوصة.</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="paymentsList" class="space-y-4">
+                    ${pendingPayments.map(report => `
+                        <div class="border border-orange-200 rounded-lg p-6 bg-orange-50 shadow-sm">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="font-bold text-lg text-gray-800">${report.facilityName || 'منشأة غير محددة'}</h3>
+                                    <p class="text-gray-600">المفتش: ${report.inspector || 'غير محدد'}</p>
+                                    <p class="text-gray-600">تاريخ الفحص: ${report.date || 'غير محدد'}</p>
+                                    <p class="text-gray-600">تاريخ الموافقة: ${report.approvedDate || 'غير محدد'}</p>
+                                    <p class="text-gray-600">رقم التقرير: ${report.reportId || 'غير محدد'}</p>
+                                </div>
+                                <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-semibold">في انتظار الدفع</span>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <h4 class="font-semibold text-gray-700 mb-2">المخالفات المطلوب دفعها:</h4>
+                                <div class="bg-white p-3 rounded-lg border border-orange-200">
+                                    ${report.violations && report.violations.length > 0 ? 
+                                        report.violations.map(v => `
+                                            <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-b-0">
+                                                <span class="text-gray-700">${v.type || v}</span>
+                                                <span class="text-red-600 font-semibold">${v.amount || '500'} د.ب</span>
+                                            </div>
+                                        `).join('') 
+                                        : '<p class="text-gray-600">لا توجد مخالفات</p>'
+                                    }
+                                </div>
+                                <div class="mt-3 p-3 bg-red-100 rounded-lg">
+                                    <p class="text-lg font-bold text-red-800">إجمالي المبلغ المطلوب: ${calculateTotalAmount(report.violations)} د.ب</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex gap-3 flex-wrap">
+                                <button onclick="markAsPaid('${report.reportId}')" 
+                                        class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                                    ✓ تأكيد الدفع
+                                </button>
+                                <button onclick="sendPaymentReminder('${report.reportId}')" 
+                                        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                                    📧 إرسال تذكير
+                                </button>
+                                <button onclick="viewPaymentDetails('${report.reportId}')" 
+                                        class="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                                    📄 تفاصيل الدفع
+                                </button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                ${pendingPayments.length === 0 ? '<div class="text-center py-12"><p class="text-gray-500 text-lg">لا توجد مخالفات تحتاج للدفع</p></div>' : ''}
+                <div class="mt-6">
+                    <button onclick="hideContentArea()" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold">
+                        العودة
+                    </button>
+                </div>
+            `;
+        }
+
+        function markAsPaid(reportId) {
+            const reportIndex = reports.findIndex(r => r.reportId === reportId);
+            if (reportIndex !== -1) {
+                reports[reportIndex].status = 'inspected';
+                reports[reportIndex].paidDate = new Date().toLocaleDateString('ar-SA');
+                reports[reportIndex].paymentStatus = 'paid';
+                localStorage.setItem('reports', JSON.stringify(reports));
+                alert('تم تأكيد الدفع. تم نقل المبنى إلى قائمة "المباني المفحوصة"');
+                showPayments(); // Refresh the view
+            }
+        }
+
+        function sendPaymentReminder(reportId) {
+            const report = reports.find(r => r.reportId === reportId);
+            if (report) {
+                alert(`تم إرسال تذكير دفع للمنشأة: ${report.facilityName}\nالمبلغ المطلوب: ${calculateTotalAmount(report.violations)} د.ب`);
+            }
+        }
+
+        function viewPaymentDetails(reportId) {
+            const report = reports.find(r => r.reportId === reportId);
+            if (!report) return;
+            
+            const contentArea = document.getElementById('contentArea');
+            contentArea.innerHTML = `
+                <div class="bg-white rounded-lg p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">تفاصيل الدفع - ${report.reportId}</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-gray-700 mb-3">معلومات المنشأة</h3>
+                            <p><strong>اسم المنشأة:</strong> ${report.facilityName || 'غير محدد'}</p>
+                            <p><strong>المفتش:</strong> ${report.inspector || 'غير محدد'}</p>
+                            <p><strong>تاريخ الفحص:</strong> ${report.date || 'غير محدد'}</p>
+                            <p><strong>تاريخ الموافقة:</strong> ${report.approvedDate || 'غير محدد'}</p>
+                        </div>
+                        
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-gray-700 mb-3">تفاصيل المخالفات</h3>
+                            <div class="space-y-2">
+                                ${report.violations ? report.violations.map(v => `
+                                    <div class="flex justify-between">
+                                        <span>${v.type || v}</span>
+                                        <span class="font-semibold">${v.amount || '500'} د.ب</span>
+                                    </div>
+                                `).join('') : '<p>لا توجد مخالفات</p>'}
+                            </div>
+                            <hr class="my-3">
+                            <div class="flex justify-between font-bold text-lg">
+                                <span>الإجمالي:</span>
+                                <span class="text-red-600">${calculateTotalAmount(report.violations)} د.ب</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg mb-6">
+                        <h3 class="font-semibold text-gray-700 mb-3">خيارات الدفع</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <button onclick="generatePaymentQR('${reportId}')" 
+                                    class="bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700">
+                                🔗 رمز QR للدفع
+                            </button>
+                            <button onclick="generatePaymentLink('${reportId}')" 
+                                    class="bg-green-600 text-white px-4 py-3 rounded-lg hover:bg-green-700">
+                                🔗 رابط الدفع الإلكتروني
+                            </button>
+                            <button onclick="printPaymentNotice('${reportId}')" 
+                                    class="bg-gray-600 text-white px-4 py-3 rounded-lg hover:bg-gray-700">
+                                🖨️ طباعة إشعار الدفع
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <button onclick="markAsPaid('${reportId}')" 
+                                class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold">
+                            ✓ تأكيد الدفع
+                        </button>
+                        <button onclick="showPayments()" 
+                                class="bg-gray-500 hover:bg-gray-600 text-white px-8 py-3 rounded-lg font-semibold">
+                            العودة
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showInspected() {
+            const contentArea = document.getElementById('contentArea');
+            contentArea.style.display = 'block';
+            
+            // Load reports from localStorage
+            const savedReports = localStorage.getItem('reports');
+            if (savedReports) {
+                reports = JSON.parse(savedReports);
+            }
+            
+            // Get all buildings that have been inspected (including all statuses)
+            const allInspectedBuildings = reports.filter(r => r.status === 'inspected' || r.status === 'pending_payment' || r.status === 'cancelled');
+            
+            contentArea.innerHTML = `
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">المباني المفحوصة</h2>
+                
+                <!-- Search Section -->
+                <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                    <h3 class="font-semibold text-gray-700 mb-3">البحث في المباني المفحوصة</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-gray-600 text-sm mb-1">نوع البحث:</label>
+                            <select id="inspectedSearchType" class="w-full p-2 border border-gray-300 rounded-lg">
+                                <option value="">اختر نوع البحث</option>
+                                <option value="facilityName">اسم المنشأة</option>
+                                <option value="ownerName">اسم المالك</option>
+                                <option value="phoneNumber">رقم الهاتف</option>
+                                <option value="reportId">رقم التقرير</option>
+                                <option value="personalId">الرقم الشخصي</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-gray-600 text-sm mb-1">البحث:</label>
+                            <input type="text" id="inspectedSearchInput" class="w-full p-2 border border-gray-300 rounded-lg" 
+                                   placeholder="أدخل كلمة البحث">
+                        </div>
+                        <div class="flex items-end">
+                            <button onclick="searchInspectedBuildings()" 
+                                    class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold mr-2">
+                                بحث
+                            </button>
+                            <button onclick="showAllInspectedBuildings()" 
+                                    class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
+                                إظهار الكل
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="inspectedList" class="space-y-4">
+                    ${allInspectedBuildings.map(report => `
+                        <div class="border rounded-lg p-6 shadow-sm ${getBuildingCardColor(report)}">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="font-bold text-lg text-gray-800">${report.facilityName || 'منشأة غير محددة'}</h3>
+                                    <p class="text-gray-600">المالك: ${report.ownerName || 'غير محدد'}</p>
+                                    <p class="text-gray-600">الهاتف: ${report.phoneNumber || 'غير محدد'}</p>
+                                    <p class="text-gray-600">المفتش: ${report.inspector || 'غير محدد'}</p>
+                                    <p class="text-gray-600">تاريخ الفحص: ${report.date || 'غير محدد'}</p>
+                                    <p class="text-gray-600">رقم التقرير: ${report.reportId || 'غير محدد'}</p>
+                                    ${report.personalId ? `<p class="text-gray-600">الرقم الشخصي: ${report.personalId}</p>` : ''}
+                                </div>
+                                <div class="text-right">
+                                    ${getBuildingStatusBadge(report)}
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                ${report.violations && report.violations.length > 0 ? `
+                                    <h4 class="font-semibold text-gray-700 mb-2">المخالفات المسجلة:</h4>
+                                    <div class="bg-white p-3 rounded-lg border">
+                                        ${report.violations.map(v => `
+                                            <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-b-0">
+                                                <span class="text-gray-700">${v.type || v}</span>
+                                                <div class="text-right">
+                                                    <span class="text-gray-600">${v.amount || '500'} د.ب</span>
+                                                    ${v.status ? `<br><span class="text-xs ${getViolationStatusColor(v.status)}">${getViolationStatusText(v.status)}</span>` : ''}
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                    <div class="mt-2 p-2 rounded ${getTotalAmountColor(report)}">
+                                        <p class="text-sm font-semibold">المبلغ الإجمالي: ${calculateTotalAmount(report.violations)} د.ب</p>
+                                        ${getPaymentStatusText(report)}
+                                    </div>
+                                ` : `
+                                    <div class="bg-green-50 p-3 rounded-lg border border-green-200">
+                                        <p class="text-green-600 font-semibold">✓ مبنى سليم - لا توجد مخالفات</p>
+                                        <p class="text-sm text-green-600 mt-1">تم فحص المبنى ووجد مطابقاً لمعايير السلامة</p>
+                                    </div>
+                                `}
+                            </div>
+                            
+                            <div class="flex gap-3 flex-wrap">
+                                <button onclick="viewDetailedInspectionReport('${report.reportId}')" 
+                                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+                                    📄 عرض التقرير التفصيلي
+                                </button>
+                                <button onclick="printCertificate('${report.reportId}')" 
+                                        class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+                                    🏆 شهادة السلامة
+                                </button>
+                                ${report.violations && report.violations.length > 0 && report.paymentStatus === 'paid' ? `
+                                    <button onclick="printPaymentReceipt('${report.reportId}')" 
+                                            class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+                                        🧾 إيصال الدفع
+                                    </button>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                ${allInspectedBuildings.length === 0 ? '<div class="text-center py-12"><p class="text-gray-500 text-lg">لا توجد مباني مفحوصة</p></div>' : ''}
+                <div class="mt-6">
+                    <button onclick="hideContentArea()" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold">
+                        العودة
+                    </button>
+                </div>
+            `;
+        }
+        
+        function getBuildingCardColor(report) {
+            if (!report.violations || report.violations.length === 0) {
+                return 'border-green-200 bg-green-50';
+            } else if (report.paymentStatus === 'paid') {
+                return 'border-blue-200 bg-blue-50';
+            } else if (report.status === 'pending_payment') {
+                return 'border-orange-200 bg-orange-50';
+            } else {
+                return 'border-gray-200 bg-gray-50';
+            }
+        }
+        
+        function getBuildingStatusBadge(report) {
+            if (!report.violations || report.violations.length === 0) {
+                return '<span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">سليم</span>';
+            } else if (report.paymentStatus === 'paid') {
+                return '<span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">مدفوع</span>';
+            } else if (report.status === 'pending_payment') {
+                return '<span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-semibold">في انتظار الدفع</span>';
+            } else {
+                return '<span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-semibold">مفحوص</span>';
+            }
+        }
+        
+        function getViolationStatusColor(status) {
+            switch(status) {
+                case 'paid': return 'text-green-600';
+                case 'pending': return 'text-orange-600';
+                case 'cancelled': return 'text-gray-600';
+                default: return 'text-red-600';
+            }
+        }
+        
+        function getViolationStatusText(status) {
+            switch(status) {
+                case 'paid': return 'مدفوع';
+                case 'pending': return 'في انتظار الدفع';
+                case 'cancelled': return 'ملغي';
+                default: return 'غير مدفوع';
+            }
+        }
+        
+        function getTotalAmountColor(report) {
+            if (report.paymentStatus === 'paid') {
+                return 'bg-green-100';
+            } else if (report.status === 'pending_payment') {
+                return 'bg-orange-100';
+            } else {
+                return 'bg-red-100';
+            }
+        }
+        
+        function getPaymentStatusText(report) {
+            if (report.paymentStatus === 'paid') {
+                return `<p class="text-sm text-green-600 mt-1">✓ تم الدفع في: ${report.paidDate || 'غير محدد'}</p>`;
+            } else if (report.status === 'pending_payment') {
+                return '<p class="text-sm text-orange-600 mt-1">⏳ في انتظار الدفع</p>';
+            } else {
+                return '<p class="text-sm text-red-600 mt-1">❌ غير مدفوع</p>';
+            }
+        }
+        
+        function searchInspectedBuildings() {
+            const searchType = document.getElementById('inspectedSearchType').value;
+            const searchInput = document.getElementById('inspectedSearchInput').value.trim();
+            
+            if (!searchType || !searchInput) {
+                alert('يرجى اختيار نوع البحث وإدخال كلمة البحث');
+                return;
+            }
+            
+            const savedReports = localStorage.getItem('reports');
+            if (savedReports) {
+                reports = JSON.parse(savedReports);
+            }
+            
+            const allInspectedBuildings = reports.filter(r => r.status === 'inspected' || r.status === 'pending_payment' || r.status === 'cancelled');
+            const filteredBuildings = allInspectedBuildings.filter(report => {
+                const searchValue = searchInput.toLowerCase();
+                switch(searchType) {
+                    case 'facilityName':
+                        return report.facilityName && report.facilityName.toLowerCase().includes(searchValue);
+                    case 'ownerName':
+                        return report.ownerName && report.ownerName.toLowerCase().includes(searchValue);
+                    case 'phoneNumber':
+                        return report.phoneNumber && report.phoneNumber.includes(searchInput);
+                    case 'reportId':
+                        return report.reportId && report.reportId.toLowerCase().includes(searchValue);
+                    case 'personalId':
+                        return report.personalId && report.personalId.includes(searchInput);
+                    default:
+                        return false;
+                }
+            });
+            
+            updateInspectedBuildingsList(filteredBuildings);
+        }
+        
+        function showAllInspectedBuildings() {
+            document.getElementById('inspectedSearchType').value = '';
+            document.getElementById('inspectedSearchInput').value = '';
+            showInspected();
+        }
+        
+        function updateInspectedBuildingsList(buildings) {
+            const inspectedList = document.getElementById('inspectedList');
+            if (buildings.length === 0) {
+                inspectedList.innerHTML = '<div class="text-center py-12"><p class="text-gray-500 text-lg">لا توجد نتائج للبحث</p></div>';
+                return;
+            }
+            
+            inspectedList.innerHTML = buildings.map(report => `
+                <div class="border rounded-lg p-6 shadow-sm ${getBuildingCardColor(report)}">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="font-bold text-lg text-gray-800">${report.facilityName || 'منشأة غير محددة'}</h3>
+                            <p class="text-gray-600">المالك: ${report.ownerName || 'غير محدد'}</p>
+                            <p class="text-gray-600">الهاتف: ${report.phoneNumber || 'غير محدد'}</p>
+                            <p class="text-gray-600">المفتش: ${report.inspector || 'غير محدد'}</p>
+                            <p class="text-gray-600">تاريخ الفحص: ${report.date || 'غير محدد'}</p>
+                            <p class="text-gray-600">رقم التقرير: ${report.reportId || 'غير محدد'}</p>
+                            ${report.personalId ? `<p class="text-gray-600">الرقم الشخصي: ${report.personalId}</p>` : ''}
+                        </div>
+                        <div class="text-right">
+                            ${getBuildingStatusBadge(report)}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        ${report.violations && report.violations.length > 0 ? `
+                            <h4 class="font-semibold text-gray-700 mb-2">المخالفات المسجلة:</h4>
+                            <div class="bg-white p-3 rounded-lg border">
+                                ${report.violations.map(v => `
+                                    <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-b-0">
+                                        <span class="text-gray-700">${v.type || v}</span>
+                                        <div class="text-right">
+                                            <span class="text-gray-600">${v.amount || '500'} د.ب</span>
+                                            ${v.status ? `<br><span class="text-xs ${getViolationStatusColor(v.status)}">${getViolationStatusText(v.status)}</span>` : ''}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="mt-2 p-2 rounded ${getTotalAmountColor(report)}">
+                                <p class="text-sm font-semibold">المبلغ الإجمالي: ${calculateTotalAmount(report.violations)} د.ب</p>
+                                ${getPaymentStatusText(report)}
+                            </div>
+                        ` : `
+                            <div class="bg-green-50 p-3 rounded-lg border border-green-200">
+                                <p class="text-green-600 font-semibold">✓ مبنى سليم - لا توجد مخالفات</p>
+                                <p class="text-sm text-green-600 mt-1">تم فحص المبنى ووجد مطابقاً لمعايير السلامة</p>
+                            </div>
+                        `}
+                    </div>
+                    
+                    <div class="flex gap-3 flex-wrap">
+                        <button onclick="viewDetailedInspectionReport('${report.reportId}')" 
+                                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+                            📄 عرض التقرير التفصيلي
+                        </button>
+                        <button onclick="printCertificate('${report.reportId}')" 
+                                class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+                            🏆 شهادة السلامة
+                        </button>
+                        ${report.violations && report.violations.length > 0 && report.paymentStatus === 'paid' ? `
+                            <button onclick="printPaymentReceipt('${report.reportId}')" 
+                                    class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+                                🧾 إيصال الدفع
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function viewDetailedInspectionReport(reportId) {
+            const report = reports.find(r => r.reportId === reportId);
+            if (!report) return;
+            
+            const contentArea = document.getElementById('contentArea');
+            contentArea.innerHTML = `
+                <div class="bg-white rounded-lg p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">التقرير التفصيلي - ${report.reportId}</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-gray-700 mb-3">معلومات المنشأة</h3>
+                            <p><strong>اسم المنشأة:</strong> ${report.facilityName || 'غير محدد'}</p>
+                            <p><strong>اسم المالك:</strong> ${report.ownerName || 'غير محدد'}</p>
+                            <p><strong>الهاتف:</strong> ${report.phoneNumber || 'غير محدد'}</p>
+                            <p><strong>الرقم الشخصي:</strong> ${report.personalId || 'غير محدد'}</p>
+                            <p><strong>العنوان:</strong> ${report.area || 'غير محدد'}</p>
+                        </div>
+                        
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-gray-700 mb-3">معلومات الفحص</h3>
+                            <p><strong>المفتش:</strong> ${report.inspector || 'غير محدد'}</p>
+                            <p><strong>تاريخ الفحص:</strong> ${report.date || 'غير محدد'}</p>
+                            <p><strong>رقم التقرير:</strong> ${report.reportId}</p>
+                            <p><strong>حالة التقرير:</strong> ${getBuildingStatusText(report)}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="font-semibold text-gray-700 mb-3">نتائج الفحص</h3>
+                        ${report.violations && report.violations.length > 0 ? `
+                            <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                                <h4 class="font-semibold text-red-700 mb-3">المخالفات المسجلة (${report.violations.length})</h4>
+                                <div class="space-y-3">
+                                    ${report.violations.map((v, index) => `
+                                        <div class="bg-white p-3 rounded border">
+                                            <div class="flex justify-between items-start">
+                                                <div>
+                                                    <p class="font-semibold text-gray-800">${index + 1}. ${v.type || v}</p>
+                                                    <p class="text-sm text-gray-600 mt-1">${v.description || 'لا توجد تفاصيل إضافية'}</p>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="font-semibold text-red-600">${v.amount || '500'} د.ب</p>
+                                                    <p class="text-xs ${getViolationStatusColor(v.status || 'pending')}">${getViolationStatusText(v.status || 'pending')}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <div class="mt-4 p-3 bg-white rounded border-2 border-red-300">
+                                    <div class="flex justify-between items-center">
+                                        <span class="font-bold text-lg">المبلغ الإجمالي:</span>
+                                        <span class="font-bold text-xl text-red-600">${calculateTotalAmount(report.violations)} د.ب</span>
+                                    </div>
+                                    ${getPaymentStatusText(report)}
+                                </div>
+                            </div>
+                        ` : `
+                            <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                                <div class="text-center py-6">
+                                    <div class="text-6xl text-green-500 mb-4">✅</div>
+                                    <h4 class="font-bold text-green-700 text-xl mb-2">مبنى سليم</h4>
+                                    <p class="text-green-600">تم فحص المبنى بالكامل ووجد مطابقاً لجميع معايير السلامة والحماية من الحريق</p>
+                                    <p class="text-sm text-green-600 mt-2">لا توجد مخالفات أو ملاحظات</p>
+                                </div>
+                            </div>
+                        `}
+                    </div>
+                    
+                    ${report.notes ? `
+                        <div class="mb-6">
+                            <h3 class="font-semibold text-gray-700 mb-3">ملاحظات المفتش</h3>
+                            <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                                <p class="text-gray-700">${report.notes}</p>
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="flex gap-4">
+                        <button onclick="printDetailedReport('${report.reportId}')" 
+                                class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold">
+                            🖨️ طباعة التقرير
+                        </button>
+                        <button onclick="showInspected()" 
+                                class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold">
+                            العودة
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function getBuildingStatusText(report) {
+            if (!report.violations || report.violations.length === 0) {
+                return 'سليم - لا توجد مخالفات';
+            } else if (report.paymentStatus === 'paid') {
+                return 'مكتمل - تم الدفع';
+            } else if (report.status === 'pending_payment') {
+                return 'في انتظار الدفع';
+            } else {
+                return 'مفحوص - يحتوي على مخالفات';
+            }
+        }
+        
+        function printDetailedReport(reportId) {
+            const report = reports.find(r => r.reportId === reportId);
+            if (!report) return;
+            
+            alert(`تم إنشاء التقرير التفصيلي للطباعة\nالمنشأة: ${report.facilityName}\nرقم التقرير: ${report.reportId}\nالمفتش: ${report.inspector}`);
+        }
+
+        function viewInspectionReport(reportId) {
+            const report = reports.find(r => r.reportId === reportId);
+            if (!report) return;
+            
+            alert(`تقرير الفحص: ${report.reportId}\nالمنشأة: ${report.facilityName}\nالمفتش: ${report.inspector}\nالحالة: مكتمل`);
+        }
+
+        function printCertificate(reportId) {
+            const report = reports.find(r => r.reportId === reportId);
+            if (!report) return;
+            
+            alert(`تم إنشاء شهادة السلامة للمنشأة: ${report.facilityName}\nرقم التقرير: ${report.reportId}`);
+        }
+
+        function printPaymentReceipt(reportId) {
+            const report = reports.find(r => r.reportId === reportId);
+            if (!report) return;
+            
+            alert(`إيصال الدفع\nالمنشأة: ${report.facilityName}\nالمبلغ المدفوع: ${calculateTotalAmount(report.violations)} د.ب\nتاريخ الدفع: ${report.paidDate}`);
+        }
+
+        function showFacilityRegistration() {
+            const currentYear = new Date().getFullYear().toString().slice(-2);
+            const requestNumber = currentYear + '-' + String(Math.floor(Math.random() * 999) + 1).padStart(3, '0');
+            
+            const contentArea = document.getElementById('contentArea');
+            contentArea.innerHTML = `
+                <div class="bg-white rounded-lg card-shadow p-6">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">تسجيل المنشآت</h2>
+                        <div class="bg-blue-50 p-4 rounded-lg mb-6">
+                            <p class="text-blue-800 font-semibold text-lg">رقم الطلب: ${requestNumber}</p>
+                        </div>
+                    </div>
+                    
+                    <form id="facilityForm" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">اسم المالك *</label>
+                                <input type="text" name="ownerName" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="أدخل اسم المالك" required>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">الرقم الشخصي *</label>
+                                <input type="text" name="personalId" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="أدخل الرقم الشخصي" required>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">رقم السجل *</label>
+                                <input type="text" name="registrationNumber" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="أدخل رقم السجل" required>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">اسم المنشأة *</label>
+                                <input type="text" name="facilityName" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="أدخل اسم المنشأة" required>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">رقم الهاتف *</label>
+                                <input type="tel" name="phoneNumber" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="أدخل رقم الهاتف" required>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">المنطقة</label>
+                                <input type="text" name="area" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="أدخل المنطقة">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">مبنى رقم</label>
+                                <input type="text" name="buildingNumber" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="أدخل رقم المبنى">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">مجمع</label>
+                                <input type="text" name="complex" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="أدخل المجمع">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">طريق</label>
+                                <input type="text" name="road" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="أدخل الطريق">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">عدد الطوابق</label>
+                                <input type="number" name="floors" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="أدخل عدد الطوابق">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">عدد المخارج *</label>
+                                <input type="number" name="fireExits" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="أدخل عدد المخارج" required>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Dry Riser</label>
+                                <select name="dryRiser" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                    <option value="">اختر...</option>
+                                    <option value="yes">نعم</option>
+                                    <option value="no">لا</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Wet Riser</label>
+                                <select name="wetRiser" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                    <option value="">اختر...</option>
+                                    <option value="yes">نعم</option>
+                                    <option value="no">لا</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">المواد الخطرة *</label>
+                                <select name="hazardousMaterials" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                                    <option value="">اختر...</option>
+                                    <option value="yes">يوجد</option>
+                                    <option value="no">لا يوجد</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">تفاصيل المنشأة</label>
+                            <textarea name="facilityDetails" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 h-24" placeholder="أدخل تفاصيل المنشأة"></textarea>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">المتطلبات المطلوبة من صاحب المنشأة</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 p-4 rounded-lg">
+                                <label class="flex items-center space-x-2 space-x-reverse">
+                                    <input type="checkbox" name="requirements" value="fire_doors_30min" class="form-checkbox h-5 w-5 text-blue-600">
+                                    <span class="text-gray-700">أبواب مقاومة للحريق - نصف ساعة</span>
+                                </label>
+                                <label class="flex items-center space-x-2 space-x-reverse">
+                                    <input type="checkbox" name="requirements" value="fire_doors_1hour" class="form-checkbox h-5 w-5 text-blue-600">
+                                    <span class="text-gray-700">أبواب مقاومة للحريق - ساعة</span>
+                                </label>
+                                <label class="flex items-center space-x-2 space-x-reverse">
+                                    <input type="checkbox" name="requirements" value="fire_doors_2hours" class="form-checkbox h-5 w-5 text-blue-600">
+                                    <span class="text-gray-700">أبواب مقاومة للحريق - ساعتين</span>
+                                </label>
+                                <label class="flex items-center space-x-2 space-x-reverse">
+                                    <input type="checkbox" name="requirements" value="fire_extinguishers" class="form-checkbox h-5 w-5 text-blue-600">
+                                    <span class="text-gray-700">طفايات</span>
+                                </label>
+                                <label class="flex items-center space-x-2 space-x-reverse">
+                                    <input type="checkbox" name="requirements" value="fire_hose" class="form-checkbox h-5 w-5 text-blue-600">
+                                    <span class="text-gray-700">خرطوم الحريق</span>
+                                </label>
+                                <label class="flex items-center space-x-2 space-x-reverse">
+                                    <input type="checkbox" name="requirements" value="mechanical_ventilation" class="form-checkbox h-5 w-5 text-blue-600">
+                                    <span class="text-gray-700">تهوية ميكانيكية</span>
+                                </label>
+                                <label class="flex items-center space-x-2 space-x-reverse">
+                                    <input type="checkbox" name="requirements" value="natural_ventilation" class="form-checkbox h-5 w-5 text-blue-600">
+                                    <span class="text-gray-700">تهوية طبيعية</span>
+                                </label>
+                                <label class="flex items-center space-x-2 space-x-reverse">
+                                    <input type="checkbox" name="requirements" value="heat_insulation" class="form-checkbox h-5 w-5 text-blue-600">
+                                    <span class="text-gray-700">مواد عازلة للحرارة</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">رفع ملفات DWG</label>
+                            <input type="file" name="dwgFiles" accept=".dwg" multiple class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <p class="text-sm text-gray-500 mt-1">يمكنك رفع عدة ملفات DWG</p>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">رفع الخرائط الهندسية *</label>
+                            <input type="file" id="engineeringMaps" name="engineeringMaps" accept="image/*" multiple class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                            <p class="text-sm text-gray-500 mt-1">يمكنك رفع عدة صور للخرائط الهندسية (صيغ JPG, PNG, PDF)</p>
+                        </div>
+                        
+                        <div class="flex gap-4 pt-6 border-t">
+                            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+                                حفظ المنشأة
+                            </button>
+                            <button type="button" onclick="hideContentArea()" class="bg-gray-500 hover:bg-gray-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+                                العودة للوحة التحكم
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+
+            // Add form submission handler
+            document.getElementById('facilityForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                // Handle engineering maps
+                const engineeringMapsFiles = formData.getAll('engineeringMaps');
+                const engineeringMapsData = [];
+                
+                // Convert images to base64 for storage
+                const processFiles = async () => {
+                    for (let file of engineeringMapsFiles) {
+                        if (file && file.size > 0) {
+                            const reader = new FileReader();
+                            await new Promise((resolve) => {
+                                reader.onload = (e) => {
+                                    engineeringMapsData.push({
+                                        name: file.name,
+                                        data: e.target.result
+                                    });
+                                    resolve();
+                                };
+                                reader.readAsDataURL(file);
+                            });
+                        }
+                    }
+                };
+                
+                processFiles().then(() => {
+                const facility = {
+                    requestNumber: requestNumber,
+                    ownerName: formData.get('ownerName'),
+                    personalId: formData.get('personalId'),
+                    registrationNumber: formData.get('registrationNumber'),
+                    facilityName: formData.get('facilityName'),
+                    phoneNumber: formData.get('phoneNumber'),
+                    area: formData.get('area'),
+                    buildingNumber: formData.get('buildingNumber'),
+                    complex: formData.get('complex'),
+                    road: formData.get('road'),
+                    floors: formData.get('floors'),
+                    fireExits: formData.get('fireExits'),
+                    dryRiser: formData.get('dryRiser'),
+                    wetRiser: formData.get('wetRiser'),
+                    hazardousMaterials: formData.get('hazardousMaterials'),
+                    facilityDetails: formData.get('facilityDetails'),
+                    requirements: formData.getAll('requirements'),
+                    engineeringMaps: engineeringMapsData,
+                    registrationDate: new Date().toLocaleDateString('ar-SA'),
+                    status: 'مسجل'
+                };
+                
+                facilities.push(facility);
+                localStorage.setItem('facilities', JSON.stringify(facilities));
+                alert('تم حفظ المنشأة بنجاح! رقم الطلب: ' + requestNumber);
+                hideContentArea();
+                }).catch(error => {
+                    console.error('Error processing files:', error);
+                    alert('حدث خطأ في رفع الخرائط');
+                });
+            });
+        }
+
+        function showFacilitySearch() {
+            const contentArea = document.getElementById('contentArea');
+            contentArea.innerHTML = `
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">البحث عن المنشآت</h2>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-gray-700 font-semibold mb-2">البحث</label>
+                    <div class="flex gap-4">
+                        <input type="text" id="searchInput" class="flex-1 p-4 border border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-500" 
+                               placeholder="البحث برقم الطلب، رقم السجل، الرقم الشخصي، اسم المالك، رقم الهاتف، أو اسم المنشأة">
+                        <button onclick="performSearch()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                            بحث
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="searchResults" class="space-y-4">
+                    <div class="bg-gray-50 p-6 rounded-lg text-center">
+                        <p class="text-gray-500">أدخل كلمة البحث للعثور على المنشآت المسجلة</p>
+                    </div>
+                </div>
+                
+                <div class="mt-6 pt-6 border-t">
+                    <button onclick="showSection('home')" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                        العودة للوحة التحكم
+                    </button>
+                </div>
+            `;
+        }
+
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            const resultsDiv = document.getElementById('searchResults');
+            
+            if (searchTerm === '') {
+                resultsDiv.innerHTML = '<div class="bg-gray-50 p-6 rounded-lg text-center"><p class="text-gray-500">أدخل كلمة البحث</p></div>';
+                return;
+            }
+
+            // Load facilities and reports from localStorage
+            const savedFacilities = localStorage.getItem('facilities');
+            const savedReports = localStorage.getItem('reports');
+            if (savedFacilities) facilities = JSON.parse(savedFacilities);
+            let allReports = savedReports ? JSON.parse(savedReports) : [];
+
+            // Search in facilities
+            const facilityResults = facilities.filter(f => 
+                (f.requestNumber && f.requestNumber.toLowerCase().includes(searchTerm)) ||
+                (f.ownerName && f.ownerName.toLowerCase().includes(searchTerm)) ||
+                (f.personalId && f.personalId.includes(searchTerm)) ||
+                (f.registrationNumber && f.registrationNumber.toLowerCase().includes(searchTerm)) ||
+                (f.facilityName && f.facilityName.toLowerCase().includes(searchTerm)) ||
+                (f.phoneNumber && f.phoneNumber.includes(searchTerm)) ||
+                (f.area && f.area.toLowerCase().includes(searchTerm)) ||
+                (f.buildingNumber && f.buildingNumber.includes(searchTerm))
+            );
+
+            // Also search in reports (from inspector)
+            const reportResults = allReports.filter(r =>
+                (r.facilityName && r.facilityName.toLowerCase().includes(searchTerm)) ||
+                (r.ownerName && r.ownerName.toLowerCase().includes(searchTerm)) ||
+                (r.personalId && r.personalId.includes(searchTerm)) ||
+                (r.phoneNumber && r.phoneNumber.includes(searchTerm)) ||
+                (r.registrationNumber && r.registrationNumber.toLowerCase().includes(searchTerm)) ||
+                (r.area && r.area.toLowerCase().includes(searchTerm)) ||
+                (r.reportId && r.reportId.toLowerCase().includes(searchTerm))
+            );
+
+            if (facilityResults.length === 0 && reportResults.length === 0) {
+                resultsDiv.innerHTML = '<div class="bg-gray-50 p-6 rounded-lg text-center"><div class="text-4xl mb-3">🔍</div><p class="text-gray-500 text-lg">لم يتم العثور على نتائج لـ "' + searchTerm + '"</p></div>';
+                return;
+            }
+
+            let html = '';
+
+            // Show registered facilities with their violation history
+            facilityResults.forEach(facility => {
+                // Find all reports/violations linked to this facility
+                const linkedReports = allReports.filter(r =>
+                    (r.personalId && r.personalId === facility.personalId) ||
+                    (r.phoneNumber && r.phoneNumber === facility.phoneNumber) ||
+                    (r.registrationNumber && r.registrationNumber === facility.registrationNumber) ||
+                    (r.facilityName && r.facilityName === facility.facilityName)
+                );
+
+                const totalViolations = linkedReports.reduce((sum, r) => sum + (r.violations ? r.violations.length : 0), 0);
+                const totalAmount = linkedReports.reduce((sum, r) => sum + calculateTotalAmount(r.violations), 0);
+
+                html += `
+                <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm mb-4">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">${facility.facilityName}</h3>
+                            <p class="text-blue-600 font-semibold text-sm">رقم الطلب: ${facility.requestNumber}</p>
+                        </div>
+                        <div class="text-left">
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold block mb-1">منشأة مسجلة</span>
+                            ${totalViolations > 0 ? `<span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold block">${totalViolations} مخالفة سابقة</span>` : '<span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold block">✓ نظيف - لا مخالفات</span>'}
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm mb-4">
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <p class="font-semibold text-gray-700 mb-2">معلومات المالك</p>
+                            <p><strong>المالك:</strong> ${facility.ownerName}</p>
+                            <p><strong>الرقم الشخصي:</strong> ${facility.personalId || 'غير محدد'}</p>
+                            <p><strong>رقم السجل:</strong> ${facility.registrationNumber || 'غير محدد'}</p>
+                            <p><strong>الهاتف:</strong> ${facility.phoneNumber}</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <p class="font-semibold text-gray-700 mb-2">معلومات المبنى</p>
+                            <p><strong>المنطقة:</strong> ${facility.area || 'غير محدد'}</p>
+                            <p><strong>رقم المبنى:</strong> ${facility.buildingNumber || 'غير محدد'}</p>
+                            <p><strong>عدد الطوابق:</strong> ${facility.floors || 'غير محدد'}</p>
+                            <p><strong>مخارج الحريق:</strong> ${facility.fireExits || 'غير محدد'}</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <p class="font-semibold text-gray-700 mb-2">سجل المخالفات</p>
+                            <p><strong>عدد الزيارات:</strong> ${linkedReports.length}</p>
+                            <p><strong>إجمالي المخالفات:</strong> ${totalViolations}</p>
+                            ${totalAmount > 0 ? `<p><strong>إجمالي الغرامات:</strong> <span class="text-red-600 font-bold">${totalAmount} د.ب</span></p>` : ''}
+                            <p><strong>تاريخ التسجيل:</strong> ${facility.registrationDate || 'غير محدد'}</p>
+                        </div>
+                    </div>
+
+                    ${linkedReports.length > 0 ? `
+                    <div class="border-t pt-4">
+                        <h4 class="font-bold text-gray-700 mb-3">📋 سجل الفحوصات والمخالفات السابقة</h4>
+                        <div class="space-y-3">
+                            ${linkedReports.map(r => `
+                            <div class="bg-${r.violations && r.violations.length > 0 ? 'red' : 'green'}-50 border border-${r.violations && r.violations.length > 0 ? 'red' : 'green'}-200 rounded-lg p-4">
+                                <div class="flex justify-between items-center mb-2">
+                                    <div>
+                                        <span class="font-semibold text-gray-700">رقم التقرير: ${r.reportId || 'غير محدد'}</span>
+                                        <span class="text-gray-500 text-sm mr-3">تاريخ: ${r.date || r.inspectionDate || 'غير محدد'}</span>
+                                    </div>
+                                    ${getStatusBadge(r.status)}
+                                </div>
+                                ${r.violations && r.violations.length > 0 ? `
+                                <div class="mt-2">
+                                    <p class="text-sm font-semibold text-red-700 mb-1">المخالفات (${r.violations.length}):</p>
+                                    <div class="grid grid-cols-2 gap-1">
+                                        ${r.violations.map(v => `
+                                        <div class="flex justify-between text-sm bg-white rounded px-2 py-1">
+                                            <span class="text-gray-700">${v.type || v}</span>
+                                            <span class="text-red-600 font-semibold">${v.amount || 500} د.ب</span>
+                                        </div>`).join('')}
+                                    </div>
+                                    <p class="text-sm font-bold text-red-800 mt-2">الإجمالي: ${calculateTotalAmount(r.violations)} د.ب</p>
+                                </div>` : '<p class="text-sm text-green-700 font-semibold">✓ لا توجد مخالفات في هذه الزيارة</p>'}
+                            </div>`).join('')}
+                        </div>
+                    </div>` : '<p class="text-sm text-gray-500 border-t pt-3">لم يتم فحص هذه المنشأة بعد</p>'}
+                </div>`;
+            });
+
+            // Show reports not linked to registered facilities
+            const unlinkedReports = reportResults.filter(r => !facilityResults.some(f =>
+                (f.personalId && f.personalId === r.personalId) ||
+                (f.phoneNumber && f.phoneNumber === r.phoneNumber) ||
+                (f.facilityName && f.facilityName === r.facilityName)
+            ));
+
+            unlinkedReports.forEach(r => {
+                html += `
+                <div class="bg-white border border-orange-200 rounded-lg p-6 shadow-sm mb-4">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">${r.facilityName || 'منشأة غير محددة'}</h3>
+                            <p class="text-orange-600 font-semibold text-sm">رقم التقرير: ${r.reportId || 'غير محدد'}</p>
+                        </div>
+                        ${getStatusBadge(r.status)}
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm mb-4">
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <p><strong>المالك:</strong> ${r.ownerName || 'غير محدد'}</p>
+                            <p><strong>الرقم الشخصي:</strong> ${r.personalId || 'غير محدد'}</p>
+                            <p><strong>الهاتف:</strong> ${r.phoneNumber || 'غير محدد'}</p>
+                            <p><strong>تاريخ الفحص:</strong> ${r.date || r.inspectionDate || 'غير محدد'}</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            ${r.violations && r.violations.length > 0 ? `
+                            <p class="font-semibold text-red-700 mb-2">المخالفات (${r.violations.length}):</p>
+                            ${r.violations.map(v => `
+                            <div class="flex justify-between text-sm">
+                                <span>${v.type || v}</span>
+                                <span class="text-red-600 font-semibold">${v.amount || 500} د.ب</span>
+                            </div>`).join('')}
+                            <p class="font-bold text-red-800 mt-2">الإجمالي: ${calculateTotalAmount(r.violations)} د.ب</p>
+                            ` : '<p class="text-green-700 font-semibold">✓ لا توجد مخالفات</p>'}
+                        </div>
+                    </div>
+                </div>`;
+            });
+
+            resultsDiv.innerHTML = `<p class="text-gray-600 mb-4">تم العثور على ${facilityResults.length + unlinkedReports.length} نتيجة</p>` + html;
+        }
+
+        // API endpoint to receive reports from inspector app
+        function receiveReport(reportData) {
+            reports.push(reportData);
+            localStorage.setItem('reports', JSON.stringify(reports));
+            console.log('Report received:', reportData);
+        }
+
+        // Load saved data on page load
+        window.addEventListener('load', function() {
+            const savedFacilities = localStorage.getItem('facilities');
+            if (savedFacilities) {
+                facilities = JSON.parse(savedFacilities);
+            }
+            
+            const savedReports = localStorage.getItem('reports');
+            if (savedReports) {
+                reports = JSON.parse(savedReports);
+            }
+        });
+
+        // Expose function globally for inspector app integration
+        window.receiveReport = receiveReport;
+    </script>
+    
+    <!-- Sync Data Script -->
+    <script src="sync_data.js"></script>
+</body>
+</html>
+
