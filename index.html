@@ -1631,24 +1631,6 @@
                             </div>
                             
                             <div>
-                                <label class="block text-gray-700 font-semibold mb-2">Dry Riser</label>
-                                <select name="dryRiser" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                                    <option value="">اختر...</option>
-                                    <option value="yes">نعم</option>
-                                    <option value="no">لا</option>
-                                </select>
-                            </div>
-                            
-                            <div>
-                                <label class="block text-gray-700 font-semibold mb-2">Wet Riser</label>
-                                <select name="wetRiser" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                                    <option value="">اختر...</option>
-                                    <option value="yes">نعم</option>
-                                    <option value="no">لا</option>
-                                </select>
-                            </div>
-                            
-                            <div>
                                 <label class="block text-gray-700 font-semibold mb-2">المواد الخطرة *</label>
                                 <select name="hazardousMaterials" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
                                     <option value="">اختر...</option>
@@ -1663,43 +1645,72 @@
                             <textarea name="facilityDetails" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 h-24" placeholder="أدخل تفاصيل المنشأة"></textarea>
                         </div>
                         
-                        <div>
-                            <h3 class="text-lg font-semibold text-gray-800 mb-4">المتطلبات المطلوبة من صاحب المنشأة</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 p-4 rounded-lg">
-                                <label class="flex items-center space-x-2 space-x-reverse">
-                                    <input type="checkbox" name="requirements" value="fire_doors_30min" class="form-checkbox h-5 w-5 text-blue-600">
-                                    <span class="text-gray-700">أبواب مقاومة للحريق - نصف ساعة</span>
-                                </label>
-                                <label class="flex items-center space-x-2 space-x-reverse">
-                                    <input type="checkbox" name="requirements" value="fire_doors_1hour" class="form-checkbox h-5 w-5 text-blue-600">
-                                    <span class="text-gray-700">أبواب مقاومة للحريق - ساعة</span>
-                                </label>
-                                <label class="flex items-center space-x-2 space-x-reverse">
-                                    <input type="checkbox" name="requirements" value="fire_doors_2hours" class="form-checkbox h-5 w-5 text-blue-600">
-                                    <span class="text-gray-700">أبواب مقاومة للحريق - ساعتين</span>
-                                </label>
-                                <label class="flex items-center space-x-2 space-x-reverse">
-                                    <input type="checkbox" name="requirements" value="fire_extinguishers" class="form-checkbox h-5 w-5 text-blue-600">
-                                    <span class="text-gray-700">طفايات</span>
-                                </label>
-                                <label class="flex items-center space-x-2 space-x-reverse">
-                                    <input type="checkbox" name="requirements" value="fire_hose" class="form-checkbox h-5 w-5 text-blue-600">
-                                    <span class="text-gray-700">خرطوم الحريق</span>
-                                </label>
-                                <label class="flex items-center space-x-2 space-x-reverse">
-                                    <input type="checkbox" name="requirements" value="mechanical_ventilation" class="form-checkbox h-5 w-5 text-blue-600">
-                                    <span class="text-gray-700">تهوية ميكانيكية</span>
-                                </label>
-                                <label class="flex items-center space-x-2 space-x-reverse">
-                                    <input type="checkbox" name="requirements" value="natural_ventilation" class="form-checkbox h-5 w-5 text-blue-600">
-                                    <span class="text-gray-700">تهوية طبيعية</span>
-                                </label>
-                                <label class="flex items-center space-x-2 space-x-reverse">
-                                    <input type="checkbox" name="requirements" value="heat_insulation" class="form-checkbox h-5 w-5 text-blue-600">
-                                    <span class="text-gray-700">مواد عازلة للحرارة</span>
-                                </label>
+                        <section class="border border-blue-200 rounded-xl p-5 bg-blue-50">
+                            <div class="mb-5">
+                                <h3 class="text-xl font-bold text-gray-800">متطلبات الحماية من الحريق والسلامة لتصريح البناء</h3>
+                                <p class="text-sm text-gray-600 mt-1">ضع علامة ✓ بجانب كل متطلب مطلوب من صاحب المنشأة. ستظهر البنود المحددة في تفاصيل المنشأة لدى ضابط العمليات والمفتش.</p>
                             </div>
-                        </div>
+
+                            <div class="space-y-6">
+                                <fieldset>
+                                    <legend class="font-bold text-blue-900 mb-3">1. المتطلبات العامة</legend>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="أبواب ونوافذ خشبية مقاومة للحريق لمدة 30 دقيقة (45 مم مع غالق أوتوماتيكي)" class="mt-1 h-5 w-5 text-blue-600"><span>أبواب ونوافذ خشبية مقاومة للحريق لمدة 30 دقيقة (45 مم مع غالق أوتوماتيكي).</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="أبواب ونوافذ خشبية مقاومة للحريق لمدة 60 دقيقة (55 مم مع غالق أوتوماتيكي)" class="mt-1 h-5 w-5 text-blue-600"><span>أبواب ونوافذ خشبية مقاومة للحريق لمدة 60 دقيقة (55 مم مع غالق أوتوماتيكي).</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="أبواب تفتح للخارج مع ذراع دفع على مخارج الطوارئ" class="mt-1 h-5 w-5 text-blue-600"><span>أبواب تفتح للخارج مع ذراع دفع (Panic Bar) على مخارج الطوارئ.</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="جدران أو حواجز أفقية مقاومة للحريق لمدة ساعتين" class="mt-1 h-5 w-5 text-blue-600"><span>جدران أو حواجز أفقية مقاومة للحريق لمدة ساعتين على الأقل.</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="طابق ميزانين من مواد مقاومة للحريق" class="mt-1 h-5 w-5 text-blue-600"><span>طابق الميزانين مبني من مواد مقاومة للحريق.</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="ألواح بلاستيكية للسقف على سطح المبنى" class="mt-1 h-5 w-5 text-blue-600"><span>توفير ألواح بلاستيكية للسقف على سطح المبنى.</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="أسطوانات الغاز في كابينة جيدة التهوية وأنابيب نحاس أو صلب" class="mt-1 h-5 w-5 text-blue-600"><span>أسطوانات الغاز في كابينة جيدة التهوية وأنابيب من النحاس أو الصلب.</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="طباخ كهربائي في المطابخ المفتوحة" class="mt-1 h-5 w-5 text-blue-600"><span>توفير طباخ كهربائي في المطابخ المفتوحة.</span></label>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset>
+                                    <legend class="font-bold text-blue-900 mb-3">2. التهوية الميكانيكية مع مولد احتياطي</legend>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="بيت الدرج: نظام ضغط الهواء" class="mt-1 h-5 w-5 text-blue-600"><span>بيت الدرج: نظام ضغط الهواء (Pressurization System).</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="القبو: نظام سحب الدخان" class="mt-1 h-5 w-5 text-blue-600"><span>القبو / السرداب: نظام سحب الدخان.</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="مواقف السيارات: نظام سحب الدخان والمروحة النفاثة" class="mt-1 h-5 w-5 text-blue-600"><span>مواقف السيارات: نظام سحب الدخان – نظام المروحة النفاثة (Jet Fan).</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="المبنى: نظام سحب الدخان" class="mt-1 h-5 w-5 text-blue-600"><span>المبنى: نظام سحب الدخان.</span></label>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset>
+                                    <legend class="font-bold text-blue-900 mb-3">3. التهوية الطبيعية</legend>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="بيت الدرج: نوافذ قابلة للفتح 1.5 متر بكل بسطة" class="mt-1 h-5 w-5 text-blue-600"><span>بيت الدرج: نوافذ قابلة للفتح بمقاس 1.5 متر في كل بسطة.</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="تهوية طبيعية للقبو أو السرداب" class="mt-1 h-5 w-5 text-blue-600"><span>تهوية طبيعية للقبو / السرداب.</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="تهوية طبيعية لمواقف السيارات" class="mt-1 h-5 w-5 text-blue-600"><span>تهوية طبيعية لمواقف السيارات.</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="تهوية طبيعية لجميع غرف المبنى" class="mt-1 h-5 w-5 text-blue-600"><span>تهوية طبيعية لجميع غرف المبنى.</span></label>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset>
+                                    <legend class="font-bold text-blue-900 mb-3">4. متطلبات مكافحة الحريق وإنذار الحريق</legend>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="نظام إنذار حريق أوتوماتيكي" class="mt-1 h-5 w-5 text-blue-600"><span>نظام إنذار الحريق: أوتوماتيكي.</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="نظام إنذار حريق يدوي" class="mt-1 h-5 w-5 text-blue-600"><span>نظام إنذار الحريق: يدوي.</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="نظام كشف الغاز" class="mt-1 h-5 w-5 text-blue-600"><span>نظام كشف الغاز.</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="نظام أنبوب جاف" class="mt-1 h-5 w-5 text-blue-600"><span>نظام الأنابيب القائمة: أنبوب جاف (Dry Riser).</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="نظام أنبوب رطب" class="mt-1 h-5 w-5 text-blue-600"><span>نظام الأنابيب القائمة: أنبوب رطب (Wet Riser).</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="رشاشات تلقائية للمبنى باستثناء الغرف الكهربائية" class="mt-1 h-5 w-5 text-blue-600"><span>رشاشات تلقائية للمبنى بالكامل باستثناء الغرف الكهربائية.</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="رشاشات تلقائية لمواقف السيارات" class="mt-1 h-5 w-5 text-blue-600"><span>رشاشات تلقائية لمواقف السيارات.</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="رشاشات تلقائية للقبو أو السرداب" class="mt-1 h-5 w-5 text-blue-600"><span>رشاشات تلقائية للقبو / السرداب.</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="رشاشات تلقائية للمناطق المشتركة ومسارات الهروب" class="mt-1 h-5 w-5 text-blue-600"><span>رشاشات تلقائية للمناطق المشتركة ومسارات الهروب.</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="طفايات حريق مناسبة للمواد داخل المنشأة" class="mt-1 h-5 w-5 text-blue-600"><span>طفايات حريق مناسبة للمواد داخل المنشأة.</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="خزان مياه لمكافحة الحريق لمدة 60 دقيقة" class="mt-1 h-5 w-5 text-blue-600"><span>خزان مياه مخصص لمكافحة الحريق لمدة 60 دقيقة.</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="مضخة مكافحة الحريق في غرفة محمية ومهواة" class="mt-1 h-5 w-5 text-blue-600"><span>مضخة مكافحة الحريق في غرفة محمية وجيدة التهوية وسهلة الوصول.</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="بكرات خراطيم الحريق" class="mt-1 h-5 w-5 text-blue-600"><span>بكرات خراطيم الحريق (Fire Hose Reel).</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="مصعد لرجال الإطفاء مع مولد احتياطي" class="mt-1 h-5 w-5 text-blue-600"><span>مصعد لرجال الإطفاء مع مولد كهربائي احتياطي.</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="إضاءة طوارئ ولوحات وعلامات الخروج" class="mt-1 h-5 w-5 text-blue-600"><span>إضاءة الطوارئ ولوحات / علامات الخروج.</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="الالتزام بمتطلبات قسم المواد الخطرة" class="mt-1 h-5 w-5 text-blue-600"><span>الالتزام بمتطلبات قسم المواد الخطرة.</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="حماية الهيكل الفولاذي وفق NFPA 5000" class="mt-1 h-5 w-5 text-blue-600"><span>حماية الهيكل الفولاذي وفق NFPA 5000، القسمين 7.2.1.1 و7.4.1.</span></label>
+                                        <label class="flex items-start gap-3 bg-white p-3 rounded-lg border"><input type="checkbox" name="requirements" value="كاميرات مراقبة أمنية في المبنى" class="mt-1 h-5 w-5 text-blue-600"><span>كاميرات مراقبة أمنية في المبنى.</span></label>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </section>
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">رفع ملفات DWG</label>
@@ -1766,8 +1777,6 @@
                     road: formData.get('road'),
                     floors: formData.get('floors'),
                     fireExits: formData.get('fireExits'),
-                    dryRiser: formData.get('dryRiser'),
-                    wetRiser: formData.get('wetRiser'),
                     hazardousMaterials: formData.get('hazardousMaterials'),
                     facilityDetails: formData.get('facilityDetails'),
                     requirements: formData.getAll('requirements'),

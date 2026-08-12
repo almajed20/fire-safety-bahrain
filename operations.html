@@ -166,6 +166,34 @@
             displayResults(results);
         }
 
+        function displayFacilityRequirements(requirements) {
+            if (!Array.isArray(requirements) || requirements.length === 0) {
+                return '<div class="mt-4 border-t pt-4"><h4 class="font-bold text-gray-800 mb-2">متطلبات الحماية والسلامة</h4><p class="text-gray-500 text-sm">لا توجد متطلبات مسجلة لهذه المنشأة.</p></div>';
+            }
+
+            const legacyLabels = {
+                fire_doors_30min: 'أبواب مقاومة للحريق لمدة 30 دقيقة',
+                fire_doors_1hour: 'أبواب مقاومة للحريق لمدة ساعة',
+                fire_doors_2hours: 'أبواب مقاومة للحريق لمدة ساعتين',
+                fire_extinguishers: 'طفايات الحريق',
+                fire_hose: 'خرطوم الحريق',
+                mechanical_ventilation: 'تهوية ميكانيكية',
+                natural_ventilation: 'تهوية طبيعية',
+                heat_insulation: 'مواد عازلة للحرارة'
+            };
+            const items = requirements.map(item => legacyLabels[item] || item);
+            return `
+                <div class="mt-4 border-t pt-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <h4 class="font-bold text-gray-800">متطلبات الحماية والسلامة المطلوبة</h4>
+                        <span class="info-badge badge-info">${items.length} بند محدد</span>
+                    </div>
+                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        ${items.map(item => `<li class="bg-green-50 border border-green-200 rounded-lg p-3 text-sm text-green-900"><span class="font-bold text-green-700">✓</span> ${item}</li>`).join('')}
+                    </ul>
+                </div>`;
+        }
+
         // Display search results
         function displayResults(results) {
             const resultsDiv = document.getElementById('searchResults');
@@ -200,9 +228,8 @@
                                 <span class="info-badge badge-info">عدد الطوابق: ${facility.floors || 'غير محدد'}</span>
                                 <span class="info-badge badge-info">عدد المخارج: ${facility.fireExits || '0'}</span>
                                 ${facility.hazardousMaterials ? `<span class="info-badge ${facility.hazardousMaterials === 'yes' ? 'badge-danger' : 'badge-yes'}">المواد الخطرة: ${facility.hazardousMaterials === 'yes' ? 'يوجد' : 'لا يوجد'}</span>` : ''}
-                                ${facility.dryRiser ? `<span class="info-badge ${facility.dryRiser === 'yes' ? 'badge-yes' : 'badge-no'}">Dry Riser: ${facility.dryRiser === 'yes' ? 'نعم' : 'لا'}</span>` : ''}
-                                ${facility.wetRiser ? `<span class="info-badge ${facility.wetRiser === 'yes' ? 'badge-yes' : 'badge-no'}">Wet Riser: ${facility.wetRiser === 'yes' ? 'نعم' : 'لا'}</span>` : ''}
                             </div>
+                            ${displayFacilityRequirements(facility.requirements)}
                         </div>
                         
                         ${facility.engineeringMaps && facility.engineeringMaps.length > 0 ? `
