@@ -8,5 +8,5 @@
 - [ ] Keep all existing employee, inspector, operations, and dashboard pages under the same project and shared data flow.
 - [ ] Test the full cross-role workflow and update the existing GitHub Pages repository.
 - [ ] Connect the existing project to Supabase as the shared central database without changing its GitHub Pages URLs.
-- [ ] Create four role accounts with the same display name ABDULLA ALMAJED and automatic role-based redirect.
+- [x] Create four role accounts with the same display name ABDULLA ALMAJED and automatic role-based redirect.
 - [x] Add the shared Supabase schema and role account records for the existing project.
