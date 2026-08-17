@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ضابط الحماية والسلامة - إدارة الحماية والسلامة من الحريق</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-100 font-sans">
+  <header class="bg-slate-900 px-6 py-5 text-white"><div class="mx-auto flex max-w-6xl items-center justify-between"><div class="flex items-center gap-4"><img src="interior_ministry_logo.png" class="h-14 w-14 rounded bg-white object-contain" alt="وزارة الداخلية"><div><h1 class="text-xl font-bold">مركز قيادة الحماية والسلامة</h1><p class="text-sm text-slate-300">ضابط الحماية والسلامة</p></div></div><div class="text-left"><p id="officerName" class="font-bold"></p><button onclick="logout()" class="mt-1 text-sm text-red-300">تسجيل الخروج</button></div></div></header>
+  <main class="mx-auto max-w-6xl p-6"><section class="mb-6 rounded-2xl bg-white p-6 shadow"><h2 class="text-2xl font-bold text-slate-900">مركز الإجراءات</h2><p class="mt-2 text-slate-600">مراجعة تقارير المفتشين، توزيع الزيارات، ومتابعة المخالفات والمهام ضمن النظام نفسه.</p><div class="mt-5 grid gap-4 md:grid-cols-4"><article class="rounded-xl bg-amber-50 p-4"><p class="text-sm text-amber-800">تقارير بانتظار المراجعة</p><p id="pendingReports" class="mt-2 text-3xl font-black text-amber-900">0</p></article><article class="rounded-xl bg-red-50 p-4"><p class="text-sm text-red-800">مخالفات مفتوحة</p><p id="openViolations" class="mt-2 text-3xl font-black text-red-900">0</p></article><article class="rounded-xl bg-blue-50 p-4"><p class="text-sm text-blue-800">فحوصات مسندة</p><p id="inspectionCount" class="mt-2 text-3xl font-black text-blue-900">0</p></article><article class="rounded-xl bg-emerald-50 p-4"><p class="text-sm text-emerald-800">منشآت مسجلة</p><p id="facilityCount" class="mt-2 text-3xl font-black text-emerald-900">0</p></article></div></section><section class="rounded-2xl bg-white p-6 shadow"><h2 class="text-xl font-bold">آخر التقارير والمخالفات</h2><div id="reviewList" class="mt-4 space-y-3"></div></section></main>
+  <script src="central_data.js"></script><script>
+    const user = JSON.parse(localStorage.getItem('officerUser') || 'null');
+    if (!user || !user.loggedIn || user.role !== 'PROTECTION_SAFETY_OFFICER') window.location.href='index.html';
+    document.getElementById('officerName').textContent = user.username;
+    function logout(){ localStorage.clear(); window.location.href='index.html'; }
+    function render(){ const facilities=JSON.parse(localStorage.getItem('facilities')||'[]'); const inspections=JSON.parse(localStorage.getItem('inspections')||'[]'); const violations=JSON.parse(localStorage.getItem('violations')||'[]'); document.getElementById('facilityCount').textContent=facilities.length; document.getElementById('inspectionCount').textContent=inspections.length; document.getElementById('openViolations').textContent=violations.filter(v=>v.status!=='closed').length; document.getElementById('pendingReports').textContent=inspections.filter(i=>!i.reviewStatus||i.reviewStatus==='pending').length; const list=document.getElementById('reviewList'); const entries=[...inspections.slice(-5).map(i=>`<div class="rounded-xl border p-4"><strong>تقرير فحص:</strong> ${i.establishment?.name||i.facilityName||'منشأة'} <span class="mr-2 text-sm text-slate-500">${i.date||''}</span></div>`),...violations.slice(-5).map(v=>`<div class="rounded-xl border border-red-100 bg-red-50 p-4"><strong>مخالفة:</strong> ${v.violationType||'غير محددة'} <span class="mr-2 text-sm text-red-700">${v.status||'new'}</span></div>`)].join(''); list.innerHTML=entries||'<p class="rounded-xl bg-slate-50 p-4 text-slate-500">لا توجد تقارير أو مخالفات للمراجعة حالياً.</p>'; }
+    window.addEventListener('load',render);
+  </script>
+</body></html>

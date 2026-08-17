@@ -42,11 +42,7 @@
                     <img src="civil_defense_logo.png" alt="شعار الدفاع المدني" class="w-16 h-16">
                 </div>
                 <h2 class="text-xl font-bold text-gray-700" id="loginTitle">تسجيل دخول الموظفين</h2>
-                <div class="flex gap-2 mt-4 mb-4">
-                    <button type="button" onclick="setLoginType('employee')" id="employeeBtn" class="flex-1 py-2 px-4 rounded-lg font-semibold bg-blue-600 text-white">موظف</button>
-                    <button type="button" onclick="setLoginType('inspector')" id="inspectorBtn" class="flex-1 py-2 px-4 rounded-lg font-semibold bg-gray-200 text-gray-700">مفتش</button>
-                    <button type="button" onclick="setLoginType('operations')" id="operationsBtn" class="flex-1 py-2 px-4 rounded-lg font-semibold bg-gray-200 text-gray-700">ضابط عمليات</button>
-                </div>
+                <p class="mt-4 mb-4 rounded-lg bg-blue-50 p-3 text-sm text-blue-800">يتم تحديد الواجهة والصلاحية تلقائياً بحسب الحساب بعد تسجيل الدخول.</p>
             </div>
             <form id="loginForm">
                 <div class="mb-4">
@@ -294,28 +290,13 @@
             }
         }
 
-        let loginType = 'employee'; // Default login type
-
-        function setLoginType(type) {
-            loginType = type;
-            const employeeBtn = document.getElementById('employeeBtn');
-            const inspectorBtn = document.getElementById('inspectorBtn');
-            const operationsBtn = document.getElementById('operationsBtn');
-            
-            // Reset all buttons
-            employeeBtn.className = 'flex-1 py-2 px-4 rounded-lg font-semibold bg-gray-200 text-gray-700';
-            inspectorBtn.className = 'flex-1 py-2 px-4 rounded-lg font-semibold bg-gray-200 text-gray-700';
-            operationsBtn.className = 'flex-1 py-2 px-4 rounded-lg font-semibold bg-gray-200 text-gray-700';
-            
-            // Highlight selected button
-            if (type === 'employee') {
-                employeeBtn.className = 'flex-1 py-2 px-4 rounded-lg font-semibold bg-blue-600 text-white';
-            } else if (type === 'inspector') {
-                inspectorBtn.className = 'flex-1 py-2 px-4 rounded-lg font-semibold bg-blue-600 text-white';
-            } else if (type === 'operations') {
-                operationsBtn.className = 'flex-1 py-2 px-4 rounded-lg font-semibold bg-blue-600 text-white';
-            }
-        }
+        const roleAccounts = {
+            'abdulla.admin': { role: 'ADMINISTRATIVE_EMPLOYEE', destination: 'employee' },
+            'abdulla.inspector': { role: 'FIELD_INSPECTOR', destination: 'inspector.html' },
+            'abdulla.safety': { role: 'PROTECTION_SAFETY_OFFICER', destination: 'officer.html' },
+            'abdulla.operations': { role: 'OPERATIONS_OFFICER', destination: 'operations.html' },
+            'abdulla.almajed': { role: 'ADMINISTRATIVE_EMPLOYEE', destination: 'employee' }
+        };
 
         function showLogin() {
             document.getElementById('loginScreen').style.display = 'flex';
@@ -330,33 +311,21 @@
                 const username = document.getElementById('username').value;
                 const password = document.getElementById('password').value;
                 
-                if (loginType === 'employee') {
-                    // Employee login
-                    if (username === 'abdulla.almajed' && password === 'abdulla@20') {
-                        currentUser = { username: 'abdulla.almajed', role: 'admin' };
-                        localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                        showAdminDashboard();
-                    } else {
-                        alert('اسم المستخدم أو كلمة المرور غير صحيحة');
-                    }
-                } else if (loginType === 'inspector') {
-                    // Inspector login
-                    if (username === 'abdulla.almajed' && password === 'abdulla@20') {
-                        // Store inspector credentials and redirect
-                        localStorage.setItem('inspectorUser', JSON.stringify({ username: username, loggedIn: true }));
-                        window.location.href = 'inspector.html';
-                    } else {
-                        alert('اسم المستخدم أو كلمة المرور غير صحيحة');
-                    }
-                } else if (loginType === 'operations') {
-                    // Operations Officer login
-                    if (username === 'abdulla.almajed' && password === 'abdulla@20') {
-                        // Store operations credentials and redirect
-                        localStorage.setItem('operationsUser', JSON.stringify({ username: username, loggedIn: true }));
-                        window.location.href = 'operations.html';
-                    } else {
-                        alert('اسم المستخدم أو كلمة المرور غير صحيحة');
-                    }
+                const account = roleAccounts[username.trim().toLowerCase()];
+                if (!account || password !== 'abdulla@20') {
+                    alert('اسم المستخدم أو كلمة المرور غير صحيحة');
+                    return;
+                }
+                const session = { username: 'ABDULLA ALMAJED', loginName: username.trim().toLowerCase(), role: account.role, loggedIn: true };
+                localStorage.setItem('currentUser', JSON.stringify(session));
+                localStorage.setItem('inspectorUser', JSON.stringify(session));
+                localStorage.setItem('operationsUser', JSON.stringify(session));
+                localStorage.setItem('officerUser', JSON.stringify(session));
+                if (account.destination === 'employee') {
+                    currentUser = session;
+                    showAdminDashboard();
+                } else {
+                    window.location.href = account.destination;
                 }
             });
 
@@ -1787,6 +1756,9 @@
                 
                 facilities.push(facility);
                 localStorage.setItem('facilities', JSON.stringify(facilities));
+                if (window.FireSafetyCentral) {
+                    window.FireSafetyCentral.saveFacility(facility).catch(error => console.warn('Central facility sync deferred:', error));
+                }
                 alert('تم حفظ المنشأة بنجاح! رقم الطلب: ' + requestNumber);
                 hideContentArea();
                 }).catch(error => {
@@ -2021,7 +1993,7 @@
     </script>
     
     <!-- Sync Data Script -->
+    <script src="central_data.js"></script>
     <script src="sync_data.js"></script>
 </body>
 </html>
-

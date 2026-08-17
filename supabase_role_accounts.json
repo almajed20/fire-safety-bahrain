@@ -1,0 +1,5 @@
+{
+  "project_id": "hwcgpgntijzuglwexkcc",
+  "name": "fire_safety_role_accounts",
+  "query": "alter table app_users add column if not exists login_name text unique;\ninsert into app_users (display_name, login_name, employee_number, role_code, is_active) values ('ABDULLA ALMAJED','abdulla.admin','FS-ADM-001','ADMINISTRATIVE_EMPLOYEE',true),('ABDULLA ALMAJED','abdulla.inspector','FS-INS-001','FIELD_INSPECTOR',true),('ABDULLA ALMAJED','abdulla.safety','FS-SAF-001','PROTECTION_SAFETY_OFFICER',true),('ABDULLA ALMAJED','abdulla.operations','FS-OPS-001','OPERATIONS_OFFICER',true) on conflict (login_name) do update set display_name = excluded.display_name, role_code = excluded.role_code, is_active = excluded.is_active, updated_at = now();"
+}
