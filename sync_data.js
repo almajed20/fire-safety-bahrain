@@ -13,6 +13,9 @@ function syncInspectionData() {
         
         // معالجة كل فحص جديد
         inspections.forEach(inspection => {
+            if (window.FireSafetyCentral) {
+                pushInspectionToCentral(inspection).catch(error => console.warn('Central inspection sync deferred:', error));
+            }
             // التحقق من وجود مخالفات
             const hasPayableViolations = Object.keys(inspection.violations).some(violationId => {
                 return inspection.violations[violationId].options.some(opt => 
@@ -106,6 +109,27 @@ function syncInspectionData() {
         console.error('Error syncing data:', error);
         return false;
     }
+}
+
+async function pushInspectionToCentral(inspection) {
+    const facilityName = inspection.establishment?.name || inspection.facilityName;
+    if (!facilityName) return;
+    const matches = await window.FireSafetyCentral.request(`facilities?facility_name=eq.${encodeURIComponent(facilityName)}&select=id&limit=1`);
+    if (!matches.length) return;
+    const facilityId = matches[0].id;
+    const reportNumber = `RPT-${inspection.timestamp || Date.now()}`;
+    const reports = await window.FireSafetyCentral.request('inspections', {
+        method: 'POST', headers: { Prefer: 'return=representation' },
+        body: JSON.stringify({ report_number: reportNumber, facility_id: facilityId, status: 'Submitted', review_status: 'Pending Review', inspector_notes: inspection.notes || null, submitted_at: new Date().toISOString() })
+    });
+    const report = reports[0];
+    const violations = inspection.violations || {};
+    await Promise.all(Object.keys(violations).flatMap(violationId => (violations[violationId].options || []).filter(option => option.isViolation).map(option =>
+        window.FireSafetyCentral.request('violations', {
+            method: 'POST',
+            body: JSON.stringify({ facility_id: facilityId, inspection_id: report.id, violation_type: violationId, title: option.label || option.value || violationId, amount_bhd: option.recordOnly ? 0 : 0, status: 'Open' })
+        })
+    )));
 }
 
 // تشغيل المزامنة عند تحميل الصفحة
