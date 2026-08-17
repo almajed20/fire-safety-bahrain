@@ -546,6 +546,12 @@
             initializeDateTime();
             initializeViolations();
             initializeEstablishmentTypes();
+            const unifiedSession = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            if (unifiedSession && unifiedSession.loggedIn && unifiedSession.role === 'FIELD_INSPECTOR') {
+                currentUser = { username: unifiedSession.loginName || unifiedSession.username, name: 'ABDULLA ALMAJED' };
+                localStorage.setItem('inspectorUser', JSON.stringify(currentUser));
+                showMainApp();
+            }
         };
 
         // Login functionality
@@ -554,8 +560,8 @@
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             
-            if (username === 'abdulla.almajed' && password === 'abdulla@20') {
-                currentUser = { username: username, name: 'عبدالله العامجد' };
+            if ((username === 'abdulla.almajed' || username === 'abdulla.inspector') && password === 'abdulla@20') {
+                currentUser = { username: username, name: 'ABDULLA ALMAJED' };
                 localStorage.setItem('inspectorUser', JSON.stringify(currentUser));
                 showMainApp();
             } else {

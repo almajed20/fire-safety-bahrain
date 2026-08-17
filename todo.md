@@ -7,6 +7,7 @@
 - [ ] Add the protection-and-safety officer, employee/inspector management, assignments, report review, notifications, audit trail, and re-inspection features inside this project.
 - [ ] Keep all existing employee, inspector, operations, and dashboard pages under the same project and shared data flow.
 - [x] Add central facility and inspection/violation synchronization hooks while retaining local fallback behavior during the transition.
+- [ ] Test all four automatic role redirects on GitHub Pages and fix any incorrect destination.
 - [ ] Test the full cross-role workflow and update the existing GitHub Pages repository.
 - [ ] Connect the existing project to Supabase as the shared central database without changing its GitHub Pages URLs.
 - [x] Create four role accounts with the same display name ABDULLA ALMAJED and automatic role-based redirect.
