@@ -11,6 +11,7 @@
 - [ ] Review pasted_content_3.txt and apply its requirements to the existing fire-safety-bahrain website.
 - [ ] Preserve the current locked protection-and-safety requirements without any content, section, or naming changes.
 - [ ] Add Center Inspector and Inspection Examiner roles with distinct violation and pre-opening inspection permissions.
+- [x] Reuse the existing locked inspector form for Center Inspector and Inspection Examiner, without changing its requirement or violation lists.
 - [ ] Add Inspection Officer Employee role for reviewing, approving, rejecting, or returning inspection reports and violations with reasons.
 - [ ] Add Inspection Officer command dashboard with urgent-intervention counts, risk buildings, workload, assignment, and audit views.
 - [x] Add inspection-request approval and assignment to either Center Inspector or Inspection Examiner.

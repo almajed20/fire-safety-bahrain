@@ -547,8 +547,8 @@
             initializeViolations();
             initializeEstablishmentTypes();
             const unifiedSession = JSON.parse(localStorage.getItem('currentUser') || 'null');
-            if (unifiedSession && unifiedSession.loggedIn && unifiedSession.role === 'FIELD_INSPECTOR') {
-                currentUser = { username: unifiedSession.loginName || unifiedSession.username, name: 'ABDULLA ALMAJED' };
+            if (unifiedSession && unifiedSession.loggedIn && ['FIELD_INSPECTOR','CENTER_INSPECTOR','INSPECTION_EXAMINER'].includes(unifiedSession.role)) {
+                currentUser = { username: unifiedSession.loginName || unifiedSession.username, name: 'ABDULLA ALMAJED', role: unifiedSession.role };
                 localStorage.setItem('inspectorUser', JSON.stringify(currentUser));
                 showMainApp();
             }
