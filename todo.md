@@ -16,6 +16,7 @@
 - [ ] Add Inspection Officer command dashboard with urgent-intervention counts, risk buildings, workload, assignment, and audit views.
 - [x] Add inspection-request approval and assignment to either Center Inspector or Inspection Examiner.
 - [ ] Add Field Officer read-only facility search and a facility inspection-request workflow with reason, note, photo, and priority.
+- [x] Add read-only facility field view with registered requirements, documents, safety data, open violations, timeline, and inspection request action.
 - [ ] Add central tables for inspection assignments, review decisions, field requests, notifications, facility timeline, and audit records.
 - [ ] Test role-based redirect and permissions for all five new inspection roles before publishing.
 - [ ] Test the full cross-role workflow and update the existing GitHub Pages repository.

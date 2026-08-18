@@ -118,16 +118,20 @@ async function pushInspectionToCentral(inspection) {
     if (!matches.length) return;
     const facilityId = matches[0].id;
     const reportNumber = `RPT-${inspection.timestamp || Date.now()}`;
+    const session = JSON.parse(localStorage.getItem('currentUser') || 'null');
+    const inspectionType = session?.role === 'INSPECTION_EXAMINER' ? 'Pre-Opening Inspection' : 'Violation Inspection';
+    const users = session?.loginName ? await window.FireSafetyCentral.request(`app_users?login_name=eq.${encodeURIComponent(session.loginName)}&select=id&limit=1`) : [];
+    const inspectorId = users[0]?.id || null;
     const reports = await window.FireSafetyCentral.request('inspections', {
         method: 'POST', headers: { Prefer: 'return=representation' },
-        body: JSON.stringify({ report_number: reportNumber, facility_id: facilityId, status: 'Submitted', review_status: 'Pending Review', inspector_notes: inspection.notes || null, submitted_at: new Date().toISOString() })
+        body: JSON.stringify({ report_number: reportNumber, facility_id: facilityId, inspector_id: inspectorId, inspection_type: inspectionType, status: 'Submitted', review_status: 'Pending Review', inspector_notes: inspection.notes || null, submitted_at: new Date().toISOString() })
     });
     const report = reports[0];
     const violations = inspection.violations || {};
     await Promise.all(Object.keys(violations).flatMap(violationId => (violations[violationId].options || []).filter(option => option.isViolation).map(option =>
         window.FireSafetyCentral.request('violations', {
             method: 'POST',
-            body: JSON.stringify({ facility_id: facilityId, inspection_id: report.id, violation_type: violationId, title: option.label || option.value || violationId, amount_bhd: option.recordOnly ? 0 : 0, status: 'Open' })
+            body: JSON.stringify({ facility_id: facilityId, inspection_id: report.id, created_by: inspectorId, inspector_role: session?.role || 'FIELD_INSPECTOR', violation_type: violationId, title: option.label || option.value || violationId, amount_bhd: option.recordOnly ? 0 : 0, status: 'Open', review_status: 'Pending Review' })
         })
     )));
 }
