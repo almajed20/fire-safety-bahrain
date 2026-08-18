@@ -8,6 +8,14 @@
 - [ ] Keep all existing employee, inspector, operations, and dashboard pages under the same project and shared data flow.
 - [x] Add central facility and inspection/violation synchronization hooks while retaining local fallback behavior during the transition.
 - [x] Test all four automatic role redirects and fix the inspector session redirect.
+- [ ] Review pasted_content_3.txt and apply its requirements to the existing fire-safety-bahrain website.
+- [ ] Preserve the current locked protection-and-safety requirements without any content, section, or naming changes.
+- [ ] Add Center Inspector and Inspection Examiner roles with distinct violation and pre-opening inspection permissions.
+- [ ] Add Inspection Officer Employee role for reviewing, approving, rejecting, or returning inspection reports and violations with reasons.
+- [ ] Add Inspection Officer command dashboard with urgent-intervention counts, risk buildings, workload, assignment, and audit views.
+- [ ] Add Field Officer read-only facility search and a facility inspection-request workflow with reason, note, photo, and priority.
+- [ ] Add central tables for inspection assignments, review decisions, field requests, notifications, facility timeline, and audit records.
+- [ ] Test role-based redirect and permissions for all five new inspection roles before publishing.
 - [ ] Test the full cross-role workflow and update the existing GitHub Pages repository.
 - [ ] Connect the existing project to Supabase as the shared central database without changing its GitHub Pages URLs.
 - [x] Create four role accounts with the same display name ABDULLA ALMAJED and automatic role-based redirect.
