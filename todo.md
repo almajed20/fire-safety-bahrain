@@ -13,6 +13,7 @@
 - [ ] Add Center Inspector and Inspection Examiner roles with distinct violation and pre-opening inspection permissions.
 - [ ] Add Inspection Officer Employee role for reviewing, approving, rejecting, or returning inspection reports and violations with reasons.
 - [ ] Add Inspection Officer command dashboard with urgent-intervention counts, risk buildings, workload, assignment, and audit views.
+- [x] Add inspection-request approval and assignment to either Center Inspector or Inspection Examiner.
 - [ ] Add Field Officer read-only facility search and a facility inspection-request workflow with reason, note, photo, and priority.
 - [ ] Add central tables for inspection assignments, review decisions, field requests, notifications, facility timeline, and audit records.
 - [ ] Test role-based redirect and permissions for all five new inspection roles before publishing.
