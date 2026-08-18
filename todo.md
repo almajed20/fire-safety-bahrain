@@ -14,6 +14,7 @@
 - [x] Reuse the existing locked inspector form for Center Inspector and Inspection Examiner, without changing its requirement or violation lists.
 - [ ] Add Inspection Officer Employee role for reviewing, approving, rejecting, or returning inspection reports and violations with reasons.
 - [ ] Add Inspection Officer command dashboard with urgent-intervention counts, risk buildings, workload, assignment, and audit views.
+- [x] Add audit-log activity view to the Inspection Officer command dashboard.
 - [x] Add inspection-request approval and assignment to either Center Inspector or Inspection Examiner.
 - [ ] Add Field Officer read-only facility search and a facility inspection-request workflow with reason, note, photo, and priority.
 - [x] Add read-only facility field view with registered requirements, documents, safety data, open violations, timeline, and inspection request action.
